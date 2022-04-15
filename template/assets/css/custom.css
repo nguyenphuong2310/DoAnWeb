@@ -2,6 +2,10 @@
     background-color: #59ab6e;
 }
 
+.max-h-800 {
+    max-height: 800px;
+}
+
 .overflow-y-scroll {
     overflow-y: scroll;
 }
