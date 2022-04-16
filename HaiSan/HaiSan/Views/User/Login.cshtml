@@ -1,0 +1,18 @@
+﻿@model HaiSan.Models.View.LoginModel
+<!Doctype html>
+<html>
+<head>
+    <title>
+        test
+    </title>
+</head>
+<body>
+    <form asp-action="login" method="post">
+        <input type="text" asp-for="Username"/>
+        <input type="password" asp-for="Password"/>
+        <input type="checkbox" asp-for="RememberMe" />
+        <input type="submit" />
+    </form>
+
+</body>
+</html>
