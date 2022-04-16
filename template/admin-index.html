@@ -20,6 +20,10 @@
     />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/5.1.0/introjs.min.css" integrity="sha512-iaYE9B9u4GU8+KkRTOdRdZuzKdYw1X0hOAa4GwDV/uwdXgoX/ffT3ph1+HG1m4LPZD/HV+dkuHvWFLZtPviylQ==" crossorigin="anonymous" referrerpolicy="no-referrer"
     />
+    <!-- Slick -->
+    <link rel="stylesheet" type="text/css" href="assets/css/slick.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/slick-theme.css">
+    <!--
 
     <!--
     
@@ -381,52 +385,158 @@ https://templatemo.com/tm-559-zay-shop
                     </p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card h-100">
-                        <a href="shop-single.html">
-                            <img src="./assets/img/ca-category.jpg" class="card-img-top" alt="...">
-                        </a>
+            <!--Start Carousel Wrapper-->
+            <div id="carousel-related-product">
+                <div class="p-2 pb-3">
+                    <div class="product-wap card rounded-0">
+                        <div class="card rounded-0">
+                            <img class="card-img rounded-0 img-fluid max-h-800" src="assets/img/ca-category.jpg">
+                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                <ul class="list-unstyled">
+                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="card-body">
-                            <h4 class="text-muted text-right">$240.00</h4>
-                            <a href="shop-single.html" class="h2 text-decoration-none text-dark">Cá ngừ</a>
-                            <p class="card-text">
-                                Phần mô tả ở đây
-                            </p>
-                            <p class="text-muted">Reviews (24)</p>
+                            <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
+                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                <li>M/L/X/XL</li>
+                                <li class="pt-2">
+                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                                </li>
+                            </ul>
+
+                            <p class="text-center mb-0">$300.00</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card h-100">
-                        <a href="shop-single.html">
-                            <img src="./assets/img/ca-category.jpg" class="card-img-top" alt="...">
-                        </a>
+
+                <div class="p-2 pb-3">
+                    <div class="product-wap card rounded-0">
+                        <div class="card rounded-0">
+                            <img class="card-img rounded-0 img-fluid max-h-800" src="assets/img/ca-category.jpg">
+                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                <ul class="list-unstyled">
+                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="card-body">
-                            <h4 class="text-muted text-right">$240.00</h4>
-                            <a href="shop-single.html" class="h2 text-decoration-none text-dark">Cá ngừ</a>
-                            <p class="card-text">
-                                Phần mô tả ở đây
-                            </p>
-                            <p class="text-muted">Reviews (24)</p>
+                            <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
+                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                <li>M/L/X/XL</li>
+                                <li class="pt-2">
+                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                                </li>
+                            </ul>
+
+                            <p class="text-center mb-0">$300.00</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card h-100">
-                        <a href="shop-single.html">
-                            <img src="./assets/img/ca-category.jpg" class="card-img-top" alt="...">
-                        </a>
+
+                <div class="p-2 pb-3">
+                    <div class="product-wap card rounded-0">
+                        <div class="card rounded-0">
+                            <img class="card-img rounded-0 img-fluid max-h-800" src="assets/img/ca-category.jpg">
+                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                <ul class="list-unstyled">
+                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="card-body">
-                            <h4 class="text-muted text-right">$240.00</h4>
-                            <a href="shop-single.html" class="h2 text-decoration-none text-dark">Cá ngừ</a>
-                            <p class="card-text">
-                                Phần mô tả ở đây
-                            </p>
-                            <p class="text-muted">Reviews (24)</p>
+                            <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
+                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                <li>M/L/X/XL</li>
+                                <li class="pt-2">
+                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                                </li>
+                            </ul>
+
+                            <p class="text-center mb-0">$300.00</p>
                         </div>
                     </div>
                 </div>
+
+                <div class="p-2 pb-3">
+                    <div class="product-wap card rounded-0">
+                        <div class="card rounded-0">
+                            <img class="card-img rounded-0 img-fluid max-h-800" src="assets/img/ca-category.jpg">
+                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                <ul class="list-unstyled">
+                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
+                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                <li>M/L/X/XL</li>
+                                <li class="pt-2">
+                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                                </li>
+                            </ul>
+
+                            <p class="text-center mb-0">$300.00</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-2 pb-3">
+                    <div class="product-wap card rounded-0">
+                        <div class="card rounded-0">
+                            <img class="card-img rounded-0 img-fluid max-h-800" src="assets/img/ca-category.jpg">
+                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                <ul class="list-unstyled">
+                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <a href="shop-single.html" class="h3 text-decoration-none">Oupidatat non</a>
+                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                <li>M/L/X/XL</li>
+                                <li class="pt-2">
+                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                                </li>
+                            </ul>
+
+                            <p class="text-center mb-0">$300.00</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -447,73 +557,97 @@ https://templatemo.com/tm-559-zay-shop
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <select class="form-select text-center mb-2">
-                        <option>Sản phẩm 1</option>
-                        <option>Sản phẩm 2</option>
-                        <option>Sản phẩm 3</option>
-                    </select>
-
-
                     <div class="text-center">
                         <div class="d-flex">
-                            <input type="text" class="border border-success p-1 w-100" style="text-align: center; margin-right: 3px; outline: none;">
+                            <input placeholder="Tìm kiếm sản phẩm..." type="text" class="border border-success p-1 w-100" style="text-align: center; margin-right: 3px; outline: none;">
                             <button class="btn btn-outline-success" style="width: 37px; height: 37px;"><i class="fa fa-search"></i></button>
                         </div>
                         <hr>
-                        <h3>Chọn 1 sản phẩm</h3>
+                        <h3>Chọn sản phẩm</h3>
                     </div>
                     <div>
                         <div class="form-outline form-white mb-4">
-                            <label for="img-banner">Chọn danh mục</label>
+                            <label for="img-banner">Chọn sản phẩm</label>
                             <div class="list-group overflow-y-scroll" style="height: 40vh;">
                                 <label class="list-group-item">
-                                  <input class="change_prod" hidden name="change-prod" type="radio" value="">
+                                  <input class="change_prod" hidden class="form-check-input me-1" type="checkbox" value="">
                                   <div class="p-3 d-flex justify-content-between">
-                                        <img src="assets/img/feature_prod_01.jpg" class="border-radius-8" height="72px" alt="123">
-                                        <div>
-                                            <h4>title</h4>
-                                            <h4>gia</h4>
-                                        </div>
+                                    <img src="assets/img/ca-category.jpg" class="border-radius-8" height="72px" alt="123">
+                                    <div>
+                                        <h4>title</h4>
+                                        <h4>gia</h4>
+                                    </div>
                                     </div>
                                 </label>
                                 <label class="list-group-item">
-                                    <input class="change_prod" hidden name="change-prod" type="radio" value="">
+                                    <input class="change_prod" hidden class="form-check-input me-1" type="checkbox" value="">
                                     <div class="p-3 d-flex justify-content-between">
-                                          <img src="assets/img/feature_prod_01.jpg" class="border-radius-8" height="72px" alt="123">
-                                          <div>
-                                              <h4>title</h4>
-                                              <h4>gia</h4>
-                                          </div>
+                                      <img src="assets/img/ca-category.jpg" class="border-radius-8" height="72px" alt="123">
+                                      <div>
+                                          <h4>title</h4>
+                                          <h4>gia</h4>
+                                      </div>
                                       </div>
                                   </label>
                                 <label class="list-group-item">
-                                    <input class="change_prod" hidden name="change-prod" type="radio" value="">
+                                    <input class="change_prod" hidden class="form-check-input me-1" type="checkbox" value="">
                                     <div class="p-3 d-flex justify-content-between">
-                                          <img src="assets/img/feature_prod_01.jpg" class="border-radius-8" height="72px" alt="123">
-                                          <div>
-                                              <h4>title</h4>
-                                              <h4>gia</h4>
-                                          </div>
+                                      <img src="assets/img/ca-category.jpg" class="border-radius-8" height="72px" alt="123">
+                                      <div>
+                                          <h4>title</h4>
+                                          <h4>gia</h4>
+                                      </div>
                                       </div>
                                   </label>
                                 <label class="list-group-item">
-                                    <input class="change_prod" hidden name="change-prod" type="radio" value="">
+                                    <input class="change_prod" hidden class="form-check-input me-1" type="checkbox" value="">
                                     <div class="p-3 d-flex justify-content-between">
-                                          <img src="assets/img/feature_prod_01.jpg" class="border-radius-8" height="72px" alt="123">
-                                          <div>
-                                              <h4>title</h4>
-                                              <h4>gia</h4>
-                                          </div>
+                                      <img src="assets/img/ca-category.jpg" class="border-radius-8" height="72px" alt="123">
+                                      <div>
+                                          <h4>title</h4>
+                                          <h4>gia</h4>
+                                      </div>
                                       </div>
                                   </label>
+                                <label class="list-group-item">
+                                    <input class="change_prod" hidden class="form-check-input me-1" type="checkbox" value="">
+                                    <div class="p-3 d-flex justify-content-between">
+                                      <img src="assets/img/ca-category.jpg" class="border-radius-8" height="72px" alt="123">
+                                      <div>
+                                          <h4>title</h4>
+                                          <h4>gia</h4>
+                                      </div>
+                                      </div>
+                                  </label>
+                                <label class="list-group-item">
+                                    <input class="change_prod" hidden class="form-check-input me-1" type="checkbox" value="">
+                                    <div class="p-3 d-flex justify-content-between">
+                                      <img src="assets/img/ca-category.jpg" class="border-radius-8" height="72px" alt="123">
+                                      <div>
+                                          <h4>title</h4>
+                                          <h4>gia</h4>
+                                      </div>
+                                      </div>
+                                  </label>
+                                <label class="list-group-item">
+                                    <input class="change_prod" hidden class="form-check-input me-1" type="checkbox" value="">
+                                    <div class="p-3 d-flex justify-content-between">
+                                      <img src="assets/img/ca-category.jpg" class="border-radius-8" height="72px" alt="123">
+                                      <div>
+                                          <h4>title</h4>
+                                          <h4>gia</h4>
+                                      </div>
+                                      </div>
+                                  </label>
+
                             </div>
+
                         </div>
 
                     </div>
                 </div>
                 <div class="modal-footer d-block">
                     <div class="text-center">
-                        <button type="button" class="btn btn-info" data-bs-dismiss="modal">Xem trước</button>
                         <button type="button" class="btn btn-primary">Lưu thay đổi</button>
                     </div>
                 </div>
@@ -629,6 +763,38 @@ https://templatemo.com/tm-559-zay-shop
     <script src="assets/js/custom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/5.1.0/intro.min.js" integrity="sha512-B0B1bdTGi9XHtoCINbtR6z9Vi8IYvvtImIE8KWMtqWAVUt2Wn2k69GxM7ya/3rQcz/Pgm/o1WcDU347/5k202A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- End Script -->
+    <!-- Start Slider Script -->
+    <script src="assets/js/slick.min.js"></script>
+    <script>
+        $('#carousel-related-product').slick({
+            infinite: true,
+            arrows: false,
+            slidesToShow: 4,
+            slidesToScroll: 3,
+            dots: true,
+            responsive: [{
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3
+                }
+            }, {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 3
+                }
+            }, {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 3
+                }
+            }]
+        });
+    </script>
+    <!-- End Slider Script -->
+
     <script>
         function intro() {
             introJs().start();
@@ -659,6 +825,7 @@ https://templatemo.com/tm-559-zay-shop
             $('#template-mo-zay-hero-carousel').carousel(index_int);
         }
     </script>
+
 </body>
 
 </html>
