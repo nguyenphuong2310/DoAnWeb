@@ -1,0 +1,135 @@
+﻿@model HaiSan.Models.View.DetailModel;
+<!-- Open Content -->
+@section Scripts {
+    <script type="text/javascript">
+        function addCartDetail(id) {
+            var sl = parseInt($('#product-quanity').val());
+            addCart(id, sl);
+        }
+        function buy(id) {
+            var sl = parseInt($('#product-quanity').val());
+            var data = { MaSP: id, Sl: sl };
+            $.ajax({
+                url: '/cart/addtocart',
+                type: "post",
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                dataType: 'json',
+                success: function (result) {
+                    var m = $('#tbContent');
+                    m.empty();
+                    var str = '';
+                    if (result == false) {
+                        str = '<i class="fa fa-times text-warning" style="font-size: 60px;"></i>'
+                            + '<h2 class="text-warning">Thêm vào giỏ hàng thất bại</h2>';
+                        m.append(str);
+                        $('#tbModal').modal('show');
+                        return;
+                    }
+                    window.location.href = '/cart';
+                }
+            });
+        }
+    </script>
+}
+
+<section class="bg-light">
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-lg-5 mt-5">
+                <div class="card mb-3">
+                    <img class="card-img img-fluid" src="/assets/img/@Model.SanPham.Img" alt="Card image cap" id="product-detail">
+                </div>
+
+            </div>
+            <!-- col end -->
+            <div class="col-lg-7 mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h1>@Model.SanPham.Title</h1>
+                        <p class="h3 py-2">@(Model.SanPham.Gia)đ</p>
+                        <h3>@Model.SanPham.Ten</h3>
+                        <h6>Mô tả:</h6>
+                        <p>
+                            @Model.SanPham.MoTa
+                        </p>
+                        <h6>Ngày đăng: @Model.SanPham.DateCreated</h6>
+
+                        <h6>Loại:</h6>
+
+                        <input type="hidden" name="product-title" value="Activewear">
+                        <div class="row">
+                            <div class="col-auto">
+                                <ul class="list-inline pb-3">
+                                    <li class="list-inline-item text-right">
+                                        <h6>Số lượng mua</h6>
+                                        <input type="number" hidden name="product-quanity" id="product-quanity" value="1">
+                                    </li>
+                                    <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
+                                    <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
+                                    <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row pb-3">
+                            <div class="col d-grid">
+                                <button onclick="buy('@Model.SanPham.MaSp')" class="btn btn-success btn-lg">Mua ngay</button>
+                            </div>
+                            <div class="col d-grid">
+                                <button class="btn btn-success btn-lg" onclick="addCartDetail('@Model.SanPham.MaSp')">Thêm vào giỏ hàng</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Close Content -->
+<!-- Start Article -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-left p-2 pb-3">
+            <h4>Related Products</h4>
+        </div>
+
+        <!--Start Carousel Wrapper-->
+        <div id="carousel-related-product">
+            @foreach (var e in Model.RelateProd)
+            {
+                <div class="p-2 pb-3">
+                    <div class="product-wap card rounded-0">
+                        <div class="card rounded-0">
+                            <img class="card-img rounded-0 img-fluid" src="/assets/img/@e.Img">
+                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                <ul class="list-unstyled">
+                                    <li><a class="btn btn-success text-white mt-2" href="/products/detail?id=@e.MaSp"><i class="far fa-eye"></i></a></li>
+                                    <li><button class="btn btn-success text-white mt-2" onclick="addCart('@e.MaSp', 1)"><i class="fas fa-cart-plus"></i></button></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <a href="/products/detail?id=@e.MaSp" class="h3 text-decoration-none">@e.Title</a>
+                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                <li class="pt-2">
+                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                                </li>
+                            </ul>
+
+                            <p class="text-center mb-0">@(e.Gia)đ</p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+
+    </div>
+</section>
+<!-- End Article -->

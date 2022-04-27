@@ -1,0 +1,128 @@
+﻿@{
+    var cate = ViewData["Category"] as String;
+    List<HaiSan.Models.Pure.Loaisp> list = ViewData["Categories"] as List<HaiSan.Models.Pure.Loaisp>;
+
+}
+@model HaiSan.Ulti.PaginatedList<HaiSan.Models.Pure.Sanpham>;
+
+
+<div class="container py-5">
+    <div class="row">
+
+        <div class="col-lg-3">
+            <h1 class="h2 pb-4">Categories</h1>
+            <div class="list-group mb-2">
+                @if (cate.ToLower() == "all")
+                {
+                    <a href="/products/all?page=1&limit=@Model.PageSize" class="list-group-item list-group-item-action list-group-item-success active">Tất cả</a>
+                }
+                else
+                {
+                    <a href="/products/all?page=1&limit=@Model.PageSize" class="list-group-item list-group-item-action list-group-item-success">Tất cả</a>
+                }
+
+                @foreach (var e in list)
+                {
+                    if (e.Maloai == cate)
+                    {
+                        <a href="/products/@e.Maloai?page=1&limit=@Model.PageSize" class="list-group-item list-group-item-action list-group-item-success active">@e.TenLoai</a>
+                    }
+                    else
+                    {
+                        <a href="/products/@e.Maloai?page=1&limit=@Model.PageSize" class="list-group-item list-group-item-action list-group-item-success">@e.TenLoai</a>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="row">
+                <div class="col-md-8">
+                </div>
+                <div class="col-md-4 pb-4">
+                    <form action="@cate" method="get">
+                        <div class="d-flex">
+                            <select name="limit" class="form-select text-center">
+                                @{
+                                    int[] arr = { 15, 20, 25 };
+                                    foreach (var e in arr)
+                                    {
+                                        if (e == Model.PageSize)
+                                        {
+                                            <option value="@e" selected>@e</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@e">@e</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                            <div>
+                                <input hidden name="page" value="1" />
+                                <input class="btn btn-success" value="Áp dụng" type="submit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                @foreach (var e in Model)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4 product-wap rounded-0">
+                            <div class="card rounded-0">
+                                <img class="card-img rounded-0 img-fluid" src="/assets/img/@e.Img">
+                                <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                    <ul class="list-unstyled">
+                                        <li><a class="btn btn-success text-white mt-2" href="/products/detail?id=@e.MaSp"><i class="far fa-eye"></i></a></li>
+                                        <li><button class="btn btn-success text-white mt-2" onclick="addCart('@e.MaSp', 1)"><i class="fas fa-cart-plus"></i></button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <a href="shop-single.html" class="h3 text-decoration-none">@e.Title</a>
+                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                    <li class="pt-2">
+                                        <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                        <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                        <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                        <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                        <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                                    </li>
+                                </ul>
+                                <p class="text-center mb-0">@e.Gia đ</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+            <div div="row">
+                <p>Have @Model.TotalPages page here!</p>
+                <ul class="pagination pagination-lg justify-content-end">
+                    @if (Model.PageIndex > 1)
+                    {
+                        var pre = Model.PageIndex - 1;
+                        <li class="page-item">
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="/products/@cate?page=@pre&limit=@Model.PageSize"><i class="fas fa-chevron-left"></i></a>
+                        </li>
+                    }
+
+                    <li class="page-item disabled">
+                        <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#" tabindex="-1">@Model.PageIndex</a>
+                    </li>
+
+                    @if (Model.PageIndex < Model.TotalPages)
+                    {
+                        <li class="page-item">
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="/products/@cate?page=@Model.PageIndex&limit=@Model.PageSize+1"><i class="fas fa-chevron-right"></i></a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- End Content -->

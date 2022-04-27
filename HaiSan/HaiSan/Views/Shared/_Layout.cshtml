@@ -1,10 +1,15 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@inject IHttpContextAccessor HttpContextAccessor
+@{
     bool isAuth = User.Identity.IsAuthenticated;
     string fullName;
     if (isAuth)
     {
         fullName = User.Claims.FirstOrDefault(c => c.Type == "Name").Value;
     }
+    var session = HttpContextAccessor.HttpContext.Session;
+    string jsoncart = session.GetString(HaiSan.Controllers.CartController.CARTKEY);
 }
 <!DOCTYPE html>
 <html lang="vi">
@@ -39,6 +44,27 @@
 </head>
 
 <body>
+
+    <!-- Modal -->
+    <div class="modal fade" id="tbModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Thông báo mua hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div id="tbContent">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="/cart" class="btn btn-primary">Xem giỏ hàng</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
         <div class="container text-light">
@@ -102,7 +128,11 @@
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="#">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
+                        @if (jsoncart != null)
+                        {
+                            var cart = JsonConvert.DeserializeObject<List<HaiSan.Models.View.CartItem>>(jsoncart);
+                            <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">@cart.Count</span>
+                        }
                     </a>
                     @if (isAuth)
                     {
@@ -240,6 +270,30 @@
     <!-- End Script -->
     <!-- Start Slider Script -->
     <script src="/assets/js/slick.min.js"></script>
+    <script type="text/javascript">
+        function addCart(prod, sl) {
+            var data = { MaSP: prod, Sl: sl };
+            $.ajax({
+                url: '/cart/addtocart',
+                type: "post",
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                dataType: 'json',
+                success: function (result) {
+                    $('#tbContent').empty();
+                    $('#tbModal').modal('show');
+                    var str = '<i class="fa fa-check text-success" style="font-size: 60px;"></i>'
+                        + '<h2 class="text-success">Thêm vào giỏ hàng thành công</h2>';
+                    if (result == false) {
+                        str = '<i class="fa fa-times text-warning" style="font-size: 60px;"></i>'
+                            + '<h2 class="text-warning">Thêm vào giỏ hàng thất bại</h2>';
+                    }
+
+                    $('#tbContent').append(str);
+                }
+            });
+        }
+    </script>
     <script>
         $('#carousel-related-product').slick({
             infinite: true,

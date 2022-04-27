@@ -1,0 +1,192 @@
+﻿@model List<HaiSan.Models.View.CartItem>
+@{
+    decimal? total = 0;
+}
+@section Scripts {
+    <script type="text/javascript">
+        function delProd(id) {
+            var data = { MaSP: id, Sl: 0 };
+            $.ajax({
+                url: '/cart/remove',
+                type: "post",
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                dataType: 'json',
+                success: function (result) {
+                    var cartBody = $('#cart-body');
+                    cartBody.empty();
+                    if (result == null) {
+                        var str = '<h1 class="text-info">Không có gì!</h1>' +
+                            '<a class="text-success" href="/products/all"><i class="fa fa-arrow-left"></i>Tiếp tục mua săm!</a>';
+                        cartBody.append(str);
+                        $('#tamtinh').html('0đ');
+                        $('#total').html('0đ');
+                    } else {
+                        var str = '';
+                        var s = 0;
+                        for (var key in result) {
+                            if (result.hasOwnProperty(key)) {
+                                s += (result[key]['maSP']['gia'] * result[key]['sl']);
+                                str = `<div class="row m-1 p-1">
+                                        <hr>
+                                        <div class="col-md-2">
+                                            <img src="/assets/img/${result[key]['maSP']['img']}" class="w-100" alt="123">
+                                        </div>
+                                        <div class="col-md-8 d-flex justify-content-between">
+                                            <div>
+                                                <h5 class="m-0">${result[key]['maSP']['title']}</h5>
+                                                <p class="m-0">${result[key]['maSP']['ten']}</p>
+                                                <p class="m-0">Số lượng mua x ${result[key]['maSP']['soluong']}</p>
+                                            </div>
+                                            <h5 class="center-vertical">${result[key]['maSP']['gia']}đ</h5>
+                                        </div>
+                                        <div class="col-md-2 d-flex justify-content-center mt-5">
+                                            <a href="#" onclick="delProd('${result[key]['maSP']['maSp']}')"><i class="fa fa-trash text-danger"></i></a>
+                                        </div>
+                                    </div>`;
+                            }
+                        }
+
+                        cartBody.append(str);
+                        $('#total').html(`${s}đ`);
+                        $('#tamtinh').html(`${s}đ`);
+                    }
+                }
+            });
+        }
+    </script>
+}
+<div class="row block-center p-3 border border-success border-1 border-radius-8">
+    <div class="col-md-7 mb-5">
+        <hr class="hr-success-20">
+        <h3>SẢN PHẨM CỦA BẠN</h3>
+        @if (Model.Count == 0)
+        {
+            <h1 class="text-info">Không có gì!</h1>
+            <a href="/products/all" class="text-success"><i class="fa fa-arrow-left"></i>Tiếp tục mua săm!</a>
+        }
+        else
+        {
+            <div id="cart-body">
+                @foreach (var e in Model)
+                {
+                    total += (e.MaSP.Gia * e.Sl);
+                    <div class="row m-1 p-1">
+                        <hr>
+                        <div class="col-md-2">
+                            <img src="/assets/img/@e.MaSP.Img" class="w-100" alt="123">
+                        </div>
+                        <div class="col-md-8 d-flex justify-content-between">
+                            <div>
+                                <h5 class="m-0">@e.MaSP.Title</h5>
+                                <p class="m-0">@e.MaSP.Ten</p>
+                                <p class="m-0">Số lượng mua x @e.Sl</p>
+                            </div>
+                            <h5 class="center-vertical">@e.MaSP.Gia đ</h5>
+                        </div>
+                        <div class="col-md-2 d-flex justify-content-center mt-5">
+                            <a href="#" onclick="delProd('@e.MaSP.MaSp')"><i class="fa fa-trash text-danger"></i></a>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+    </div>
+    <div class="col-md-5">
+        <hr class="hr-success-20">
+        <h3>PAYMENT</h3>
+        <hr style="margin-top: 13px;">
+        <div class="p-3">
+            <div class="d-flex justify-content-between">
+                <h5>Tạm tính: </h5><span id="tamtinh">@(total)đ</span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <h5>Giảm giá: </h5><span>0đ</span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <h5>Shipping: </h5><span>0đ</span>
+            </div>
+        </div>
+        
+        <div class="p-3 bg-success w-100 border-radius-8">
+            <div class="d-flex justify-content-between text-white">
+                <h4 class="fw-bold m-0">Tổng<i class="fas fa-coins"></i></h4>
+                <span id="total">@(total)đ</span>
+            </div>
+        </div>
+
+        <hr style="margin-top: 12px">
+
+        <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true"><i class="fas fa-home"></i></button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false"><i class="fab fa-cc-visa"></i></button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <h3>Thanh toán trực tiếp tại nhà</h3>
+                <form action="">
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" id="typeName" class="form-control form-control-lg" size="17" placeholder="Người nhận">
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" id="typeName1" class="form-control form-control-lg" size="17" placeholder="Email">
+                    </div>
+
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" id="typeName2" class="form-control form-control-lg" size="17" placeholder="Số diện thoại">
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" id="typeName3" class="form-control form-control-lg" size="17" placeholder="Địa chỉ">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block btn-lg w-100">
+                        <div class="d-flex justify-content-between">
+                            <span>Giao hàng ngay!</span>
+                            <span>Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                        </div>
+                    </button>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <h3>Thanh toán qua Visa</h3>
+                <form action="">
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" id="typeName4" class="form-control form-control-lg" size="17" placeholder="Chủ thẻ">
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" id="typeName5" class="form-control form-control-lg" size="17" placeholder="Số thẻ">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-outline form-white mb-4">
+                                <input onfocus="(this.type='date')" onfocusout="(this.type='text')" type="text" id="typeExp" class="form-control form-control-lg" placeholder="Hạn dùng">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-outline form-white mb-4">
+                                <input type="password" id="typeText" class="form-control form-control-lg" placeholder="Cvv" size="1" minlength="3" maxlength="3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" id="typeName6" class="form-control form-control-lg" size="17" placeholder="Số diện thoại">
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" id="typeName7" class="form-control form-control-lg" size="17" placeholder="Địa chỉ">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block btn-lg w-100">
+                        <div class="d-flex justify-content-between">
+                            <span>Thanh toán ngay!</span>
+                            <span>Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                        </div>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
