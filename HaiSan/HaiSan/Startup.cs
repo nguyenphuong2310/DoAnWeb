@@ -3,10 +3,12 @@ using HaiSan.Models.Pure;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -28,9 +30,11 @@ namespace HaiSan
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            // add dbcontext
             services.AddDbContext<HaiSanContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("HaiSan"))
                 );
+            // add cookie authen
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie(options =>
                     {
@@ -40,9 +44,10 @@ namespace HaiSan
                         options.LogoutPath = "/user/loguot";
                         options.AccessDeniedPath = "/Forbidden/";
                     });
+            // add session
             services.AddDistributedMemoryCache();
             services.AddSession(cfg => {
-                cfg.Cookie.Name = "xuanthulab";
+                cfg.Cookie.Name = "peniiz";
                 cfg.IdleTimeout = new TimeSpan(0, 30, 0);
             });
 
@@ -50,6 +55,7 @@ namespace HaiSan
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IUserService, UserService>();
 
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +73,7 @@ namespace HaiSan
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            
             app.UseSession();
             app.UseRouting();
 
