@@ -151,3 +151,4 @@ C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\HaiSa
 C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\HaiSan.genruntimeconfig.cache
 C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\Razor\Views\Product\Index.cshtml.g.cs
 C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\Razor\Views\Cart\Index.cshtml.g.cs
+C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\Razor\Views\Product\Detail.cshtml.g.cs

@@ -1,4 +1,5 @@
 ﻿using HaiSan.DI;
+using HaiSan.Models.View;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
@@ -22,6 +23,22 @@ namespace HaiSan.Controllers
             ViewData["Category"] = category;
             var res = await _service.GetAllByCategoryIdPaging(category, page, limit);
             return View(res);
+        }
+        [Route("/products/detail")]
+        public async Task<IActionResult> Detail(string id)
+        {
+            var prod = await _service.GetById(id);
+            if(prod == null)
+            {
+                return NotFound();
+            }
+            var relateProd = await _service.GetAllByCategoryIdPaging(prod.MaLoai, 1, 20);
+            DetailModel model = new DetailModel()
+            {
+                SanPham = prod,
+                RelateProd = relateProd
+            };
+            return View(model);
         }
 
 
