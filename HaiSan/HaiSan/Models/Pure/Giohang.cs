@@ -19,6 +19,10 @@ namespace HaiSan.Models.Pure
         public string Location { get; set; }
         public string Phone { get; set; }
         public string Username { get; set; }
+        public string CardNumber { get; set; }
+        public string CardHolder { get; set; }
+        public string Expired { get; set; }
+        public string Cvv { get; set; }
 
         public virtual User UsernameNavigation { get; set; }
         public virtual ICollection<Item> Items { get; set; }

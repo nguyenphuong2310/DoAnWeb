@@ -14,6 +14,7 @@ namespace HaiSan.Models.Pure
 
         public string Maloai { get; set; }
         public string TenLoai { get; set; }
+        public string Path { get; set; }
 
         public virtual ICollection<Sanpham> Sanphams { get; set; }
     }

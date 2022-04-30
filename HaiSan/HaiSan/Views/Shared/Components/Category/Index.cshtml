@@ -1,0 +1,9 @@
+﻿@model List<HaiSan.Models.Pure.Loaisp>
+
+
+<ul class="list-unstyled text-light footer-link-list">
+    @foreach (var item in Model)
+    {
+        <li><a class="text-decoration-none" href="/products/@item.Maloai">@item.TenLoai</a></li>
+    }
+</ul>

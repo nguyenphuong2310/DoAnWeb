@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using HaiSan.Models.Pure;
 using HaiSan.Models.View;
 using HaiSan.Ulti;
+using Microsoft.AspNetCore.Http;
 
 namespace HaiSan.DI
 {
@@ -26,14 +27,14 @@ namespace HaiSan.DI
             return cates;
         }
 
-        public async Task<int> Create(SanPhamCreateRequest request)
+        private async Task<string> SaveProductImageAsync(IFormFile Img)
         {
             const int WIDTH = 600;
             const int HEIGHT = 800;
             // Tạo unique name cho file
-            var fileName = Guid.NewGuid() + Path.GetExtension(request.Img.FileName).ToLower();
+            var fileName = Guid.NewGuid() + Path.GetExtension(Img.FileName).ToLower();
             // Resize hình về tỉ lệ chuẩn
-            var image = Image.FromStream(request.Img.OpenReadStream());
+            var image = Image.FromStream(Img.OpenReadStream());
             var resized = new Bitmap(image, new System.Drawing.Size(WIDTH, HEIGHT));
             using var imageStream = new MemoryStream();
             resized.Save(imageStream, ImageFormat.Png);
@@ -49,7 +50,12 @@ namespace HaiSan.DI
             {
                 await request.Img.CopyToAsync(stream);
             }*/
+            return fileName;
+        }
 
+        public async Task<int> Create(SanPhamCreateRequest request)
+        {
+            var fileName = await SaveProductImageAsync(request.Img);
             // create new product
             var prod = new Sanpham()
             {
@@ -60,6 +66,7 @@ namespace HaiSan.DI
                 MoTa = request.MoTa,
                 Title = request.Title,
                 Img = fileName,
+                Soluong = request.Soluong,
                 Username = request.Username,
                 IdSize = request.IdSize,
                 MaLoai = request.MaLoai
@@ -109,12 +116,30 @@ namespace HaiSan.DI
             return await PaginatedList<Sanpham>.CreateAsync(query.AsNoTracking(), 1, 15);
         }
 
-        public async Task<int> Update(Sanpham product)
+        public async Task<int> Update(SanPhamUpdateRequest request)
         {
-            var prod = _context.Sanphams.Where(e => e.MaSp == product.MaSp).FirstOrDefault();
-            if (prod == null) return -1;
-            prod = product;
+            string fileName = null;
+            if (request.Img != null)
+            {
+                fileName = await SaveProductImageAsync(request.Img);
+            }
+            var prod = _context.Sanphams.Where(e => e.MaSp == request.MaSp).FirstOrDefault();
+            prod.DateCreated = DateTime.Now;
+            prod.Ten = request.Ten;
+            prod.Gia = request.Gia;
+            prod.MoTa = request.MoTa;
+            prod.Title = request.Title;
+            prod.Img = fileName ?? prod.Img;
+            prod.Username = request.Username;
+            prod.Soluong = request.Soluong;
+            prod.IdSize = request.IdSize;
+            prod.MaLoai = request.MaLoai;
             return await _context.SaveChangesAsync();
+        }
+
+        public async Task<Loaisp> GetCategoryById(string id)
+        {
+            return await _context.Loaisps.FindAsync(id);
         }
     }
 }

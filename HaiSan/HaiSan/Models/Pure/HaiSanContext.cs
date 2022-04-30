@@ -31,7 +31,7 @@ namespace HaiSan.Models.Pure
             /*if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=Luc\\SQLExpress;Database=HaiSan;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=HaiSan;Trusted_Connection=True;");
             }*/
         }
 
@@ -85,6 +85,19 @@ namespace HaiSan.Models.Pure
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
+                entity.Property(e => e.CardHolder)
+                    .HasMaxLength(100)
+                    .HasColumnName("cardHolder");
+
+                entity.Property(e => e.CardNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("cardNumber");
+
+                entity.Property(e => e.Cvv)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.DateCreated)
                     .HasColumnType("date")
                     .HasColumnName("dateCreated");
@@ -92,6 +105,11 @@ namespace HaiSan.Models.Pure
                 entity.Property(e => e.DateUpdated)
                     .HasColumnType("date")
                     .HasColumnName("dateUpdated");
+
+                entity.Property(e => e.Expired)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("expired");
 
                 entity.Property(e => e.Location).HasColumnName("location");
 
@@ -162,6 +180,8 @@ namespace HaiSan.Models.Pure
                 entity.Property(e => e.Maloai)
                     .HasMaxLength(100)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Path).IsUnicode(false);
             });
 
             modelBuilder.Entity<Role>(entity =>

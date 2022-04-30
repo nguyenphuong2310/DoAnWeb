@@ -10,8 +10,8 @@ namespace HaiSan.Models.View
 {
     public class SanPhamCreateRequest
     {
-        public string MaSp { get; set; }
         [Required(ErrorMessage = "Bạn phải nhập tên sản phẩm")]
+        [Display(Name = "Tên sản phẩm")]
         public string Ten { get; set; }
         [Display(Name = "Giá bán")]
         [RegularExpression(@"\d+(\.\d{1,2})?", ErrorMessage = "Invalid price")]

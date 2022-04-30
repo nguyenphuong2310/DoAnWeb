@@ -11,7 +11,7 @@ namespace HaiSan.DI
     {
         Task<int> Create(SanPhamCreateRequest request);
 
-        Task<int> Update(Sanpham product);
+        Task<int> Update(SanPhamUpdateRequest product);
 
         Task<int> Delete(string productId);
 
@@ -20,6 +20,8 @@ namespace HaiSan.DI
         Task<Sanpham> GetById(string productId);
 
         Task<List<Loaisp>> AllCategory();
+
+        Task<Loaisp> GetCategoryById(string id);
 
         Task<List<Sanpham>> GetAllPaging(int pageIndex, int limit);
 

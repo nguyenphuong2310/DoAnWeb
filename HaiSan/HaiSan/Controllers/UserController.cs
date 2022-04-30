@@ -22,15 +22,17 @@ namespace HaiSan.Controllers
             _service = service;
         }
         [AllowAnonymous]
-        public IActionResult Login()
+        public IActionResult Login(string ReturnUrl)
         {
+            ViewData["ReturnUrl"] = ReturnUrl;
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginModel request)
+        public async Task<IActionResult> Login(LoginModel request, string ReturnUrl)
         {
+            ViewData["ReturnUrl"] = ReturnUrl;
             if (ModelState.IsValid)
             {
                 var user = _service.Login(request);
@@ -76,12 +78,56 @@ namespace HaiSan.Controllers
                         new ClaimsPrincipal(claimsIdentity),
                         authProperties
                         );
-                    return RedirectToAction("index", "home");
+                    if (Url.IsLocalUrl(ReturnUrl))
+                        return Redirect(ReturnUrl);
+                    else
+                        return RedirectToAction("index", "home");
                 }
                 ModelState.AddModelError("", "Invalid login attempt.");
                 return View(request);
             }
             return View(request);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("login", "user");
+        }
+
+        [AllowAnonymous]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register(RegisterModel user)
+        {
+            if (user.Username != null)
+            {
+                var usrname = await _service.GetUserByUserName(user.Username);
+                if (usrname != null)
+                {
+                    ModelState.AddModelError("Available", "Tài khoản đã tồn tại!");
+                    return View(user);
+                }
+            }
+            if (ModelState.IsValid)
+            {
+                await _service.Register(user);
+                return RedirectToAction("login");
+            }
+            return View();
+        }
+
+        [Route("/user/manager")]
+        public IActionResult Manager()
+        {
+            var userId = User.Identity.Name;
+            return View(_service.GetAllProductByUsername(userId));
         }
     }
 }

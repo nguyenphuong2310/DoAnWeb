@@ -1,10 +1,15 @@
-﻿using HaiSan.Models;
+﻿using HaiSan.DI;
+using HaiSan.Models;
+using HaiSan.Models.View;
+using HaiSan.Ulti;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,15 +18,18 @@ namespace HaiSan.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IProductService _service;
+        public HomeController(ILogger<HomeController> logger, IProductService service)
         {
             _logger = logger;
+            _service = service;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View();
+            ModifyInterface _interfaceService = new ModifyInterface(_service);
+            var model = await _interfaceService.GetHomeModelAsync();
+            return View(model);
         }
 
         [Authorize(Roles = "admin")]
