@@ -99,7 +99,7 @@
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/home/index">Trang chủ</a>
+                            <a class="nav-link" href="/">Trang chủ</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/home/about">Giới thiệu</a>
@@ -134,7 +134,7 @@
                     </a>
                     @if (isAuth)
                     {
-                        <a class="nav-icon position-relative text-decoration-none" href="user/manager">
+                        <a class="nav-icon position-relative text-decoration-none" asp-action="manager" asp-controller="user">
                             <i class="fa fa-fw fa-user text-dark mr-3"></i>
                             <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
                         </a>
@@ -142,7 +142,7 @@
                     }
                     else
                     {
-                        <a class="nav-icon position-relative text-decoration-none" href="/user/login">
+                        <a class="nav-icon position-relative text-decoration-none" asp-action="login" asp-controller="user">
                             <i class="fa fa-fw fa-sign-in-alt text-primary mr-3"></i>
                         </a>
                     }
@@ -184,11 +184,11 @@
                         </li>
                         <li>
                             <i class="fa fa-phone fa-fw"></i>
-                            <a class="text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                            <a class="text-decoration-none" href="#">010-020-0340</a>
                         </li>
                         <li>
                             <i class="fa fa-envelope fa-fw"></i>
-                            <a class="text-decoration-none" href="mailto:info@company.com">phuongmoi@company.com</a>
+                            <a class="text-decoration-none" href="#">phuongmoi@company.com</a>
                         </li>
                     </ul>
                 </div>
@@ -201,7 +201,7 @@
                 <div class="col-md-4 pt-5">
                     <h2 class="h2 text-light border-bottom pb-3 border-light">Thông tin thêm</h2>
                     <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="/home/index">Trang chủ</a></li>
+                        <li><a class="text-decoration-none" href="/">Trang chủ</a></li>
                         <li><a class="text-decoration-none" href="/home/about">Giới thiệu</a></li>
                         <li><a class="text-decoration-none" href="/home/contact">Địa chỉ</a></li>
                         <li><a class="text-decoration-none" href="/home/privacy">FAQs</a></li>

@@ -68,14 +68,28 @@ namespace HaiSan.Controllers
             
             return View(request);
         }
-/*
+
         [HttpPost]
-        public IActionResult ChangeFeatureCategory(CategoryModifyRequest request)
+        public IActionResult ChangeFeatureCategory(ModifyModel request)
         {
+            if(ModelState.IsValid)
+            {
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/admin/featureCategories.json");
+                var o1 = JArray.Parse(System.IO.File.ReadAllText(@path));
+                int index = request.Category.CateIndex;
+                o1[index]["maLoai"] = request.Category.MaLoai;
+                // write JSON directly to a file
+                using (StreamWriter file = System.IO.File.CreateText(@path))
+                using (JsonTextWriter writer = new JsonTextWriter(file))
+                {
+                    o1.WriteTo(writer);
+                }
+                return RedirectToAction("index", "home");
+            }
             return View();
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public IActionResult ChangeFeatureProducts(ProductsModifyRequest request)
         {
             return View();

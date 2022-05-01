@@ -298,7 +298,7 @@
                         Activity Log
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <a class="dropdown-item" asp-controller="user" asp-action="logout" data-toggle="modal" data-target="#logoutModal">
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                         Logout
                     </a>
@@ -332,7 +332,7 @@
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="dataTables_length mb-2" id="dataTable_length">
-                                <a class="btn btn-primary" href="/products/create">Thêm mới hàng hóa</a>
+                                <a class="btn btn-primary" asp-controller="products" asp-action="create">Thêm mới hàng hóa</a>
                             </div>
 
                             <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
@@ -347,7 +347,7 @@
                             <div class="col-sm-12">
                             @if (Model.Count == 0)
                             {
-                                <h3>Bạn không có sản phẩm nào cả. <a href="/products/create">Tạo mới sản phẩm ngay!</a></h3>
+                                <h3>Bạn không có sản phẩm nào cả. <a asp-controller="products" asp-action="create">Tạo mới sản phẩm ngay!</a></h3>
                             }
                             <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                                 <thead>
@@ -368,12 +368,12 @@
                                     <tr class="odd">
                                         <td class="sorting_1">@e.Title</td>
                                         <td>@e.Ten</td>
-                                        <td>@e.Gia</td>
+                                        <td>@e.Gia.ToString("0,0")</td>
                                         <td>@e.DateCreated</td>
                                         <td>@e.MoTa</td>
                                         <td>@e.Soluong</td>
                                         <td><a onclick="deleteHang('@e.MaSp')" class="text-danger" href="#">Xóa</a></td>
-                                        <td><a href="/products/update?id=@e.MaSp">Sửa</a></td>
+                                        <td><a asp-action="update" asp-controller="products" asp-route-prodId="@e.MaSp">Sửa</a></td>
                                     </tr>
                                     }
                                 </tbody>

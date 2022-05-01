@@ -47,7 +47,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h1>@Model.SanPham.Title</h1>
-                        <p class="h3 py-2">@(Model.SanPham.Gia)đ</p>
+                        <p class="h3 py-2">@(Model.SanPham.Gia.ToString("0,0"))đ</p>
                         <h3>@Model.SanPham.Ten</h3>
                         <h6>Mô tả:</h6>
                         <p>
@@ -121,7 +121,7 @@
                                 </li>
                             </ul>
 
-                            <p class="text-center mb-0">@(e.Gia)đ</p>
+                            <p class="text-center mb-0">@(e.Gia.ToString("0,0"))đ</p>
                         </div>
                     </div>
                 </div>

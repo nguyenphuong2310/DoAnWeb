@@ -19,6 +19,7 @@ namespace HaiSan.Ulti
         }
         public async Task<HomeModel> GetHomeModelAsync()
         {
+            // get banner
             var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/admin/banner.json");
             var o1 = JArray.Parse(File.ReadAllText(@path));
             List<Banner> list = new List<Banner>();
@@ -33,14 +34,7 @@ namespace HaiSan.Ulti
                 };
                 list.Add(b);
             }
-            path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/admin/featureProducts.json");
-            o1 = JArray.Parse(File.ReadAllText(@path));
-            List<Sanpham> list2 = new List<Sanpham>();
-            for (int i = 0; i < o1.Count(); i++)
-            {
-                Sanpham sp = await _service.GetById(o1[i]["MaSp"].ToString());
-                list2.Add(sp);
-            };
+            // get feature categories
             path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/admin/featureCategories.json");
             o1 = JArray.Parse(File.ReadAllText(@path));
             List<Loaisp> list3 = new List<Loaisp>();
@@ -49,12 +43,14 @@ namespace HaiSan.Ulti
                 Loaisp sp = await _service.GetCategoryById(o1[i]["maLoai"].ToString());
                 list3.Add(sp);
             };
+
             HomeModel model = new()
             {
                 Banner = list,
-                FeatureProducts = list2,
-                FeatuteCategories = list3
-            };
+                FeatureCategories = list3,
+                FeatureProducts = await _service.GetAllPaging(1, 20),
+                Categories = await _service.AllCategory()
+        };
             return model;
         }
     }

@@ -7,5 +7,7 @@ namespace HaiSan.Models.View
 {
     public class CategoryModifyRequest
     {
+        public int CateIndex { get; set; }
+        public string MaLoai { get; set; }
     }
 }

@@ -176,7 +176,7 @@
         </div>
     </div>
     <div class="row">
-        @foreach (var e in info.FeatuteCategories)
+        @foreach (var e in info.FeatureCategories)
         {
             <div class="col-12 col-md-4 p-5 mt-3">
                 <a href="#"><img src="/assets/img/@e.Path" class="rounded-circle img-fluid border"></a>
@@ -206,70 +206,40 @@
                 <h2 class="modal-title text-success" id="staticBackdropLabel">Thay đổi giao diện website</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <select class="form-select text-center mb-2">
-                    <option>Danh mục 1</option>
-                    <option>Danh mục 2</option>
-                    <option>Danh mục 3</option>
-                </select>
-                <div class="form-outline form-white mb-4">
-                    <label for="img-banner">Chọn danh mục</label>
-                    <div class="list-group overflow-y-scroll" style="height: 40vh;">
-                        <label class="list-group-item">
-                            <input class="form-check-input me-1" name="change-cate" type="radio" value="">
-                            First checkbox
-                        </label>
-                        <label class="list-group-item">
-                            <input class="form-check-input me-1" name="change-cate" type="radio" value="">
-                            Second checkbox
-                        </label>
-                        <label class="list-group-item">
-                            <input class="form-check-input me-1" name="change-cate" type="radio" value="">
-                            Third checkbox
-                        </label>
-                        <label class="list-group-item">
-                            <input class="form-check-input me-1" name="change-cate" type="radio" value="">
-                            Fourth checkbox
-                        </label>
-                        <label class="list-group-item">
-                            <input class="form-check-input me-1" name="change-cate" type="radio" value="">
-                            Fifth checkbox
-                        </label>
-                        <label class="list-group-item">
-                            <input class="form-check-input me-1" name="change-cate" type="radio" value="">
-                            Fifth checkbox
-                        </label>
-                        <label class="list-group-item">
-                            <input class="form-check-input me-1" name="change-cate" type="radio" value="">
-                            Fifth checkbox
-                        </label>
-                        <label class="list-group-item">
-                            <input class="form-check-input me-1" name="change-cate" type="radio" value="">
-                            Fifth checkbox
-                        </label>
-                        <label class="list-group-item">
-                            <input class="form-check-input me-1" name="change-cate" type="radio" value="">
-                            Fifth checkbox
-                        </label>
-                        <label class="list-group-item">
-                            <input class="form-check-input me-1" name="change-cate" type="radio" value="">
-                            Fifth checkbox
-                        </label>
+            <form asp-action="ChangeFeatureCategory" asp-controller="admin" method="post">
+                <div class="modal-body">
+                    <select asp-for="Category.CateIndex" class="form-select text-center mb-2">
+                        <option value="0">Danh mục 1</option>
+                        <option value="1">Danh mục 2</option>
+                        <option value="2">Danh mục 3</option>
+                    </select>
+                    <div class="form-outline form-white mb-4">
+                        <label for="img-banner">Chọn danh mục</label>
+                        <div class="list-group overflow-y-scroll" style="height: 40vh;">
+
+                            @foreach (var e in info.Categories)
+                            {
+                                <label class="list-group-item">
+                                    <input class="form-check-input me-1" asp-for="Category.MaLoai" type="radio" value="@e.Maloai">
+                                    @e.TenLoai
+                                </label>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer d-block">
-                <div class="text-center">
-                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">Xem trước</button>
-                    <button type="button" class="btn btn-primary">Lưu thay đổi</button>
+                <div class="modal-footer d-block">
+                    <div class="text-center">
+                        
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
 
 <!-- Start Featured Product -->
-<section class="bg-light cus-bor border-radius-8">
+<section class="bg-light">
     <div class="container py-5">
         <div class="row text-center py-3">
             <div class="col-lg-6 m-auto">
@@ -290,13 +260,13 @@
                         <img class="card-img rounded-0 img-fluid max-h-800" src="/assets/img/@e.Img">
                         <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                             <ul class="list-unstyled">
-                                <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+                                <li><a class="btn btn-success text-white mt-2" href="#"><i class="far fa-eye"></i></a></li>
+                                <li><a class="btn btn-success text-white mt-2" href="#"><i class="fas fa-cart-plus"></i></a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="card-body">
-                        <a href="shop-single.html" class="h3 text-decoration-none" style="height: 20px">@e.Title</a>
+                        <a href="#" class="h3 text-decoration-none" style="height: 20px">@e.Title</a>
                         <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                             <li class="pt-2">
                                 <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
@@ -307,7 +277,7 @@
                             </li>
                         </ul>
 
-                        <p class="text-center mb-0">@e.Gia</p>
+                        <p class="text-center mb-0">@e.Gia.ToString("0,0")</p>
                     </div>
                 </div>
             </div>
@@ -317,59 +287,7 @@
     </div>
 </section>
 <!-- End Featured Product -->
-<!-- Button trigger modal -->
-<div class="text-center mb-3">
-    <button type="button" class="cus-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop3">
-        Thay đổi
-    </button>
-</div>
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title text-success" id="staticBackdropLabel">Thay đổi giao diện website</h2>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="text-center">
-                    <div class="d-flex">
-                        <input placeholder="Tìm kiếm sản phẩm..." type="text" class="border border-success p-1 w-100" style="text-align: center; margin-right: 3px; outline: none;">
-                        <button class="btn btn-outline-success" style="width: 37px; height: 37px;"><i class="fa fa-search"></i></button>
-                    </div>
-                    <hr>
-                    <h3>Chọn sản phẩm</h3>
-                </div>
-                <div>
-                    <div class="form-outline form-white mb-4">
-                        <label for="img-banner">Chọn sản phẩm</label>
-                        <div class="list-group overflow-y-scroll" style="height: 40vh;">
-                            <label class="list-group-item">
-                                <input hidden class="form-check-input me-1 change_prod" type="checkbox" value="">
-                                <div class="p-3 d-flex justify-content-between">
-                                    <img src="/assets/img/ca-category.jpg" class="border-radius-8" height="72" alt="123">
-                                    <div>
-                                        <h4>title</h4>
-                                        <h4>gia</h4>
-                                    </div>
-                                </div>
-                            </label>
-
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-            <div class="modal-footer d-block">
-                <div class="text-center">
-                    <button type="button" class="btn btn-primary">Lưu thay đổi</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 

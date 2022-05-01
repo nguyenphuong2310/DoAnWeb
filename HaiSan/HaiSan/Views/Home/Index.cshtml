@@ -82,12 +82,12 @@
         </div>
     </div>
     <div class="row">
-        @foreach (var e in Model.FeatuteCategories)
+        @foreach (var e in Model.FeatureCategories)
         {
             <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img src="/assets/img/@e.Path" class="rounded-circle img-fluid border"></a>
+                <a asp-action="@e.Maloai" asp-controller="products"><img src="/assets/img/@e.Path" class="rounded-circle img-fluid border"></a>
                 <h5 class="text-center mt-3 mb-3">@e.TenLoai</h5>
-                <p class="text-center"><a class="btn btn-success">Mua ngay</a></p>
+                <p class="text-center"><a asp-action="@e.Maloai" asp-controller="products" class="btn btn-success">Mua ngay</a></p>
             </div>
         }
 
@@ -116,13 +116,12 @@
                             <img class="card-img rounded-0 img-fluid" src="/assets/img/@e.Img">
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white mt-2" asp-controller="products" asp-action="@e.MaLoai"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" asp-controller="cart" asp-action="addtocart"><i class="fas fa-cart-plus"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" asp-controller="products" asp-action="detail" asp-route-prodId="@e.MaSp"><i class="far fa-eye"></i></a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="card-body">
-                            <a href="#" class="h3 text-decoration-none">@e.Title</a>
+                            <a asp-controller="products" asp-action="detail" asp-route-prodId="@e.MaSp" class="h3 text-decoration-none">@e.Title</a>
                             <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
 
                                 <li class="pt-2">
@@ -134,7 +133,7 @@
                                 </li>
                             </ul>
 
-                            <p class="text-center mb-0">@(e.Gia)đ</p>
+                            <p class="text-center mb-0">@(e.Gia.ToString("0,0"))đ</p>
                         </div>
                     </div>
                 </div>

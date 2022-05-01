@@ -1,6 +1,6 @@
 ﻿@model List<HaiSan.Models.View.CartItem>
 @{
-    decimal? total = 0;
+    decimal total = 0;
 }
 @section Scripts {
     <script type="text/javascript">
@@ -17,7 +17,6 @@
                     cartBody.empty();
                     if (result == null) {
                         var str = '<h1 class="text-info">Không có gì!</h1>';
-                           
                         cartBody.append(str);
                         $('#tamtinh').html('0đ');
                         $('#total').html('0đ');
@@ -36,20 +35,21 @@
                                             <div>
                                                 <h5 class="m-0">${result[key]['maSP']['title']}</h5>
                                                 <p class="m-0">${result[key]['maSP']['ten']}</p>
-                                                <p class="m-0">Số lượng mua x ${result[key]['maSP']['soluong']}</p>
+                                                <p class="m-0">Số lượng mua x ${result[key]['sl']}</p>
                                             </div>
-                                            <h5 class="center-vertical">${result[key]['maSP']['gia']}đ</h5>
+
+                                            <h5 class="center-vertical">${new Intl.NumberFormat('en-IN').format(result[key]['maSP']['gia'])}đ</h5>
                                         </div>
                                         <div class="col-md-2 d-flex justify-content-center mt-5">
                                             <a href="#" onclick="delProd('${result[key]['maSP']['maSp']}')"><i class="fa fa-trash text-danger"></i></a>
                                         </div>
                                     </div>`;
+                                cartBody.append(str);
                             }
                         }
 
-                        cartBody.append(str);
-                        $('#total').html(`${s}đ`);
-                        $('#tamtinh').html(`${s}đ`);
+                        $('#total').html(`${new Intl.NumberFormat('en-IN').format(s)}đ`);
+                        $('#tamtinh').html(`${new Intl.NumberFormat('en-IN').format(s)}đ`);
                     }
                 }
             });
@@ -81,7 +81,7 @@
                                 <p class="m-0">@e.MaSP.Ten</p>
                                 <p class="m-0">Số lượng mua x @e.Sl</p>
                             </div>
-                            <h5 class="center-vertical">@e.MaSP.Gia đ</h5>
+                            <h5 class="center-vertical">@e.MaSP.Gia.ToString("0,0") đ</h5>
                         </div>
                         <div class="col-md-2 d-flex justify-content-center mt-5">
                             <a href="#" onclick="delProd('@e.MaSP.MaSp')"><i class="fa fa-trash text-danger"></i></a>
@@ -90,7 +90,7 @@
                 }
             </div>
         }
-        <a href="/products/all" class="text-success"><i class="fa fa-arrow-left"></i>Tiếp tục mua săm!</a>
+        <a asp-controller="products" asp-action="all" class="text-success"><i class="fa fa-arrow-left"></i>Tiếp tục mua săm!</a>
     </div>
     <div class="col-md-5">
         <hr class="hr-success-20">
@@ -98,7 +98,7 @@
         <hr style="margin-top: 13px;">
         <div class="p-3">
             <div class="d-flex justify-content-between">
-                <h5>Tạm tính: </h5><span id="tamtinh">@(total)đ</span>
+                <h5>Tạm tính: </h5><span id="tamtinh">@(total.ToString("0,0"))đ</span>
             </div>
             <div class="d-flex justify-content-between">
                 <h5>Giảm giá: </h5><span>0đ</span>
@@ -111,7 +111,7 @@
         <div class="p-3 bg-success w-100 border-radius-8">
             <div class="d-flex justify-content-between text-white">
                 <h4 class="fw-bold m-0">Tổng<i class="fas fa-coins"></i></h4>
-                <span id="total">@(total)đ</span>
+                <span id="total">@(total.ToString("0,0"))đ</span>
             </div>
         </div>
 

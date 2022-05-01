@@ -27,9 +27,9 @@ namespace HaiSan.Controllers
             return View(res);
         }
         [Route("/products/detail")]
-        public async Task<IActionResult> Detail(string id)
+        public async Task<IActionResult> Detail(string prodId)
         {
-            var prod = await _service.GetById(id);
+            var prod = await _service.GetById(prodId);
             if(prod == null)
             {
                 return NotFound();
@@ -63,15 +63,16 @@ namespace HaiSan.Controllers
                 }
                 return RedirectToAction("manager", "user");
             }
+            ViewData["Categories"] = await _service.AllCategory();
             return View(prod);
         }
         [Authorize]
         [Route("/products/update")]
-        public async Task<IActionResult> Update(string id)
+        public async Task<IActionResult> Update(string prodId)
         {
-            var prod = await _service.GetById(id);
+            var prod = await _service.GetById(prodId);
             var userId = User.Identity.Name;
-            if (userId != prod.Username || prod == null)
+            if (prod == null || userId != prod.Username)
             {
                 return NotFound();
             }
@@ -85,9 +86,9 @@ namespace HaiSan.Controllers
         [Route("/products/update")]
         public async Task<IActionResult> Update(SanPhamUpdateRequest prod)
         {
-            if(ModelState.IsValid)
+            var product = await _service.GetById(prod.MaSp);
+            if (ModelState.IsValid)
             {
-                var product = await _service.GetById(prod.MaSp);
                 var userId = User.Identity.Name;
                 if (product == null || userId != product.Username)
                 {
@@ -100,6 +101,8 @@ namespace HaiSan.Controllers
                 }
                 return RedirectToAction("manager", "user");
             }
+            ViewData["Categories"] = await _service.AllCategory();
+            ViewData["Product"] = product;
             return View(prod);
         }
         [Authorize]

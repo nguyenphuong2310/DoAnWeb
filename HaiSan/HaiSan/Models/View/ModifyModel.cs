@@ -9,6 +9,5 @@ namespace HaiSan.Models.View
     {
         public BannerModifyRequest Banner { get; set; }
         public CategoryModifyRequest Category { get; set; }
-        public ProductsModifyRequest Products { get; set; }
     }
 }
