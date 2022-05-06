@@ -75,13 +75,13 @@
                                 <img class="card-img rounded-0 img-fluid" src="/assets/img/@e.Img">
                                 <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                     <ul class="list-unstyled">
-                                        <li><a class="btn btn-success text-white mt-2" href="/products/detail?id=@e.MaSp"><i class="far fa-eye"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href="/products/detail?prodId=@e.MaSp"><i class="far fa-eye"></i></a></li>
                                         <li><button class="btn btn-success text-white mt-2" onclick="addCart('@e.MaSp', 1)"><i class="fas fa-cart-plus"></i></button></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <a href="shop-single.html" class="h3 text-decoration-none">@e.Title</a>
+                                <a href="/products/detail?prodId=@e.MaSp" class="h3 text-decoration-none">@e.Title</a>
                                 <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                                     <li class="pt-2">
                                         <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
@@ -91,7 +91,7 @@
                                         <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
                                     </li>
                                 </ul>
-                                <p class="text-center mb-0">@e.Gia đ</p>
+                                <p class="text-center mb-0">@e.Gia.ToString("0,0") đ</p>
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,76 @@
+﻿@model HaiSan.Models.View.SanPhamCreateRequest;
+@{
+    ViewData["Title"] = "Create";
+    List<HaiSan.Models.Pure.Loaisp> list = ViewData["Categories"] as List<HaiSan.Models.Pure.Loaisp>;
+    var id = User.Identity.Name;
+}
+
+<div style="width: 90%; margin: 50px auto;">
+    <form asp-action="create" asp-controller="products" enctype="multipart/form-data" method="post">
+        <div class="row margin-bottom-10">
+            <div class="col-md-6">
+                <hr />
+                <h1>Tạo sản phẩm mới</h1>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="Username" class="hidden" value="@id" hidden />
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Ten" class="control-label"></label>
+                    <input asp-for="Ten" class="form-control" />
+                    <span asp-validation-for="Ten" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Gia" class="control-label"></label>
+                    <input asp-for="Gia" class="form-control" type="number" />
+                    <span asp-validation-for="Gia" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="MoTa" class="control-label"></label>
+                    <textarea asp-for="MoTa" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="MoTa" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Soluong" class="control-label"></label>
+                    <input type="number" asp-for="Soluong" class="form-control" />
+                    <span asp-validation-for="Soluong" class="text-danger"></span>
+                </div>
+
+                <div class="form-group" style="overflow: hidden">
+                    <label asp-for="Img" class="control-label"></label>
+                    <h5 class="text-info">Hình ảnh nên có tỉ lệ 3:4 (600x800) để hiển thị tốt nhất </h5>
+                    <input asp-for="Img" type="file" class="" />
+                    <span asp-validation-for="Img" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <hr />
+                <h1>Chọn loại sản phẩm: </h1>
+                <div class="sidebar" style="height: 450px; overflow-y: scroll;">
+                    <span asp-validation-for="MaLoai" class="text-danger"></span>
+                    <ul class="list-group p-2">
+                        @foreach (var e in list)
+                        {
+                            <li><label for="@e.Maloai" class="list-group-item w-100"><input class="form-check-input me-1" name="MaLoai" type="radio" id="@e.Maloai" value="@e.Maloai">&nbsp; @e.TenLoai</label></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+            <div>
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </div>
+
+    </form>
+</div>

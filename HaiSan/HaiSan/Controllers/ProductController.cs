@@ -1,7 +1,9 @@
 ﻿using HaiSan.DI;
 using HaiSan.Models.View;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace HaiSan.Controllers
@@ -25,9 +27,9 @@ namespace HaiSan.Controllers
             return View(res);
         }
         [Route("/products/detail")]
-        public async Task<IActionResult> Detail(string id)
+        public async Task<IActionResult> Detail(string prodId)
         {
-            var prod = await _service.GetById(id);
+            var prod = await _service.GetById(prodId);
             if(prod == null)
             {
                 return NotFound();
@@ -39,6 +41,84 @@ namespace HaiSan.Controllers
                 RelateProd = relateProd
             };
             return View(model);
+        }
+        [Route("/products/create")]
+        [Authorize]
+        public async Task<IActionResult> Create()
+        {
+            ViewData["Categories"] = await _service.AllCategory();
+            return View();
+        }
+        [Authorize]
+        [Route("/products/create")]
+        [HttpPost]
+        public async Task<IActionResult> Create(SanPhamCreateRequest prod) 
+        {
+            if(ModelState.IsValid)
+            {
+                var res = await _service.Create(prod);
+                if (res == 0)
+                {
+                    return NotFound();
+                }
+                return RedirectToAction("manager", "user");
+            }
+            ViewData["Categories"] = await _service.AllCategory();
+            return View(prod);
+        }
+        [Authorize]
+        [Route("/products/update")]
+        public async Task<IActionResult> Update(string prodId)
+        {
+            var prod = await _service.GetById(prodId);
+            var userId = User.Identity.Name;
+            if (prod == null || userId != prod.Username)
+            {
+                return NotFound();
+            }
+            ViewData["Categories"] = await _service.AllCategory();
+            ViewData["Product"] = prod;
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("/products/update")]
+        public async Task<IActionResult> Update(SanPhamUpdateRequest prod)
+        {
+            var product = await _service.GetById(prod.MaSp);
+            if (ModelState.IsValid)
+            {
+                var userId = User.Identity.Name;
+                if (product == null || userId != product.Username)
+                {
+                    return NotFound();
+                }
+                var res = await _service.Update(prod);
+                if (res == 0)
+                {
+                    return NotFound();
+                }
+                return RedirectToAction("manager", "user");
+            }
+            ViewData["Categories"] = await _service.AllCategory();
+            ViewData["Product"] = product;
+            return View(prod);
+        }
+        [Authorize]
+        [HttpPost]
+        [Route("/products/delete")]
+        public async Task<bool> Delete([FromBody]IdRequest prod)
+        {
+            var product = await _service.GetById(prod.Id);
+            var userId = User.Identity.Name;
+            if (product == null || userId != product.Username)
+            {
+                return false;
+            }
+            
+            var res = await _service.Delete(product.MaSp);
+            return res != 0;
         }
 
 

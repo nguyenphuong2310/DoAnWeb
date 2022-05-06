@@ -152,3 +152,12 @@ C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\HaiSa
 C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\Razor\Views\Product\Index.cshtml.g.cs
 C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\Razor\Views\Cart\Index.cshtml.g.cs
 C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\Razor\Views\Product\Detail.cshtml.g.cs
+C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\Razor\Views\Shared\_Manager.cshtml.g.cs
+C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\Razor\Views\User\Index.cshtml.g.cs
+C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\Razor\Views\User\Manager.cshtml.g.cs
+C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\Razor\Views\User\Register.cshtml.g.cs
+C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\Razor\Views\Product\Create.cshtml.g.cs
+C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\Razor\Views\Shared\Components\Category\Index.cshtml.g.cs
+C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\Razor\Views\Product\Update.cshtml.g.cs
+C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\Razor\Views\Admin\Index.cshtml.g.cs
+C:\Users\Admin\Documents\HaiSan_Jay\DoAnWeb\HaiSan\HaiSan\obj\Debug\net5.0\Razor\Views\Admin\Modify.cshtml.g.cs

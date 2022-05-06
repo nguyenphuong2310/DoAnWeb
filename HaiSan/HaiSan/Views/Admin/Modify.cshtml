@@ -1,0 +1,294 @@
+﻿@model HaiSan.Models.View.ModifyModel
+@{
+    HaiSan.Models.View.HomeModel info = ViewData["Info"] as HaiSan.Models.View.HomeModel;
+}
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/5.1.0/intro.min.js" integrity="sha512-B0B1bdTGi9XHtoCINbtR6z9Vi8IYvvtImIE8KWMtqWAVUt2Wn2k69GxM7ya/3rQcz/Pgm/o1WcDU347/5k202A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function intro() {
+            introJs().start();
+        }
+
+        function preview() {
+            var ban = [banner_1, banner_2, banner_3];
+            const [file] = img_banner.files;
+            // banner index
+            var index = $('#banner_sel').val();
+            // title
+            var title = $('#inp_tit').val();
+            var content = $('#inp_content').val();
+
+            var index_int = parseInt(index);
+            var temp_tit = `#title_${index_int + 1}`;
+            var temp_content = `#content_${index_int + 1}`;
+
+            if (file != null) {
+                ban[index].src = URL.createObjectURL(file);
+            }
+            if (title !== '') {
+                $(temp_tit).html(title);
+            }
+            if (content !== '') {
+                $(temp_content).html(content);
+            }
+            $('#template-mo-zay-hero-carousel').carousel(index_int);
+        }
+    </script>
+}
+@section Link {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/5.1.0/introjs-rtl.min.css" integrity="sha512-VwsKKwi99ZnRScgAkJ+ISGNolfoq+ic/mzJfhZWQ1xwfcbLZzLnHDoERYEppL25Okf+wEI/nDhHogudTa/YkWA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/5.1.0/introjs.min.css" integrity="sha512-iaYE9B9u4GU8+KkRTOdRdZuzKdYw1X0hOAa4GwDV/uwdXgoX/ffT3ph1+HG1m4LPZD/HV+dkuHvWFLZtPviylQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+}
+<!-- Start Banner Hero -->
+<div class="cus-bor border-radius-8" data-step="1" data-title="Welcome!" data-intro="Bạn có thể thay đổi giao diện tại đây!">
+    <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-interval="false">
+        <ol class="carousel-indicators">
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img id="banner_1" class="img-fluid" src="/assets/img/@info.Banner[0].Path" alt="123">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left align-self-center">
+                                <h1 class="h1 text-success"><b>Zay</b> eCommerce</h1>
+                                <h3 id="title_1" class="h2">@info.Banner[0].Title</h3>
+                                <p id="content_1">
+                                    @info.Banner[0].Content
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img id="banner_2" class="img-fluid" src="/assets/img/@info.Banner[1].Path" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1">Proident occaecat</h1>
+                                <h3 id="title_2" class="h2">@info.Banner[1].Title</h3>
+                                <p id="content_2">
+                                    @info.Banner[1].Content
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img id="banner_3" class="img-fluid" src="/assets/img/@info.Banner[2].Path" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1">Repr in voluptate</h1>
+                                <h3 id="title_3" class="h2">@info.Banner[2].Title</h3>
+                                <p id="content_3">
+                                    @info.Banner[2].Content
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+        <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
+            <i class="fas fa-chevron-right"></i>
+        </a>
+    </div>
+</div>
+<!-- Button trigger modal -->
+<div class="mb-5">
+    <div style="width: 183px; margin: 0 auto;">
+        <button data-step="2" id="open-modal" data-position="top" data-intro="Bằng cách nhấn vào nút thay đổi ở dưới giao diện cần thay đổi" type="button" class="cus-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+            Thay đổi
+        </button>
+        <button onclick="intro()" data-step="3" data-intro="Bạn có thể xem lại hướng dẫn tại đây!" class="btn btn-info border border-light border-5" style="position: relative; border-radius: 50%; top: -20px; left: 67px; z-index: 999 " href="#" id="hint-intro"><i class="fa fa-question"></i></button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title text-success" id="staticBackdropLabel">Thay đổi giao diện website</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-action="ChangeBanner" asp-controller="admin" enctype="multipart/form-data">
+                    <select asp-for="Banner.SlideIndex" id="banner_sel" class="form-select text-center mb-2">
+                        <option value="0">Slide 1</option>
+                        <option value="1">Slide 2</option>
+                        <option value="2">Slide 3</option>
+                    </select>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-outline form-white mb-4">
+                                <label>Tiêu đề</label>
+                                <input asp-for="Banner.Title" required id="inp_tit" class="form-control form-control-lg" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-outline form-white mb-4">
+                                <label for="img_banner">Hình</label>
+                                <input asp-for="Banner.Img" id="img_banner" type="file" class="form-control form-control-lg">
+                            </div>
+                        </div>
+                        <div class="form-outline form-white mb-4">
+                            <label>Nội dung content</label>
+                            <textarea asp-for="Banner.Content" required id="inp_content" class="form-control form-control-lg" rows="6"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="text-center">
+                        <button onclick="preview()" type="button" class="btn btn-info" data-bs-dismiss="modal">Xem trước</button>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Banner Hero -->
+<!-- Start Categories of The Month -->
+<section class="container py-5 cus-bor border-radius-8">
+    <div class="row text-center pt-3">
+        <div class="col-lg-6 m-auto">
+            <h1 class="h1">Danh mục nổi bật</h1>
+            <p>
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        @foreach (var e in info.FeatureCategories)
+        {
+            <div class="col-12 col-md-4 p-5 mt-3">
+                <a href="#"><img src="/assets/img/@e.Path" class="rounded-circle img-fluid border"></a>
+                <h5 class="text-center mt-3 mb-3">@e.TenLoai</h5>
+                <p class="text-center"><a class="btn btn-success">Mua ngay</a></p>
+            </div>
+        }
+
+    </div>
+
+    <!-- End Banner Hero -->
+
+</section>
+<!-- End Categories of The Month -->
+<!-- Button trigger modal -->
+<div class="text-center mb-3">
+    <button type="button" class="cus-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+        Thay đổi
+    </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title text-success" id="staticBackdropLabel">Thay đổi giao diện website</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="ChangeFeatureCategory" asp-controller="admin" method="post">
+                <div class="modal-body">
+                    <select asp-for="Category.CateIndex" class="form-select text-center mb-2">
+                        <option value="0">Danh mục 1</option>
+                        <option value="1">Danh mục 2</option>
+                        <option value="2">Danh mục 3</option>
+                    </select>
+                    <div class="form-outline form-white mb-4">
+                        <label for="img-banner">Chọn danh mục</label>
+                        <div class="list-group overflow-y-scroll" style="height: 40vh;">
+
+                            @foreach (var e in info.Categories)
+                            {
+                                <label class="list-group-item">
+                                    <input class="form-check-input me-1" asp-for="Category.MaLoai" type="radio" value="@e.Maloai">
+                                    @e.TenLoai
+                                </label>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-block">
+                    <div class="text-center">
+                        
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Start Featured Product -->
+<section class="bg-light">
+    <div class="container py-5">
+        <div class="row text-center py-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h1">Sản phẩm nổi bật</h1>
+                <p>
+                    Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+                </p>
+            </div>
+        </div>
+        <!--Start Carousel Wrapper-->
+        <div id="carousel-related-product">
+            
+            @foreach(var e in info.FeatureProducts)
+            {
+            <div class="p-2 pb-3">
+                <div class="product-wap card rounded-0">
+                    <div class="card rounded-0">
+                        <img class="card-img rounded-0 img-fluid max-h-800" src="/assets/img/@e.Img">
+                        <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                            <ul class="list-unstyled">
+                                <li><a class="btn btn-success text-white mt-2" href="#"><i class="far fa-eye"></i></a></li>
+                                <li><a class="btn btn-success text-white mt-2" href="#"><i class="fas fa-cart-plus"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <a href="#" class="h3 text-decoration-none" style="height: 20px">@e.Title</a>
+                        <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                            <li class="pt-2">
+                                <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                            </li>
+                        </ul>
+
+                        <p class="text-center mb-0">@e.Gia.ToString("0,0")</p>
+                    </div>
+                </div>
+            </div>
+            }
+
+        </div>
+    </div>
+</section>
+<!-- End Featured Product -->
+
+
+
+
+

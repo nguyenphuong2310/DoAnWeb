@@ -17,6 +17,18 @@ namespace HaiSan.DI
             _context = context;
         }
 
+        public List<Sanpham> GetAllProductByUsername(string id)
+        {
+            var prods = _context.Sanphams.Where(e => e.Username == id).ToList();
+            return prods;
+        }
+
+        public async Task<User> GetUserByUserName(string username)
+        {
+            var user = await _context.Users.FindAsync(username);
+            return user;
+        }
+
         public User Login(LoginModel request)
         {
             var user = _context.Users.SingleOrDefault(e => e.Username == request.Username);
@@ -42,5 +54,9 @@ namespace HaiSan.DI
             return await _context.SaveChangesAsync();
         }
 
+        public Task<List<Sanpham>> Search(string key, string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

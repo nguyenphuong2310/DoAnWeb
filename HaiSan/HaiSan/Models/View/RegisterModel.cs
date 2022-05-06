@@ -23,6 +23,7 @@ namespace HaiSan.Models.View
         [Display(Name = "Số điện thoại")]
         public string Phone { get; set; }
         [Required]
+        [Display(Name = "Họ và tên")]
         public string Name { get; set; }
     }
 }
