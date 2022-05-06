@@ -29,16 +29,16 @@
                                 str = `<div class="row m-1 p-1">
                                         <hr>
                                         <div class="col-md-2">
-                                            <img src="/assets/img/${result[key]['maSP']['img']}" class="w-100" alt="123">
+                                            <a href="products/detail?prodId=${result[key]['maSP']['maSp']}"><img src="/assets/img/${result[key]['maSP']['img']}" class="w-100" alt="123"></a>
                                         </div>
                                         <div class="col-md-8 d-flex justify-content-between">
                                             <div>
-                                                <h5 class="m-0">${result[key]['maSP']['title']}</h5>
-                                                <p class="m-0">${result[key]['maSP']['ten']}</p>
-                                                <p class="m-0">Số lượng mua x ${result[key]['sl']}</p>
+                                                <h5 class="m-0">${htmlEncode(result[key]['maSP']['title'])}</h5>
+                                                <p class="m-0">${htmlEncode(result[key]['maSP']['ten'])}</p>
+                                                <p class="m-0">Số lượng mua x ${htmlEncode(result[key]['sl'])}</p>
                                             </div>
 
-                                            <h5 class="center-vertical">${new Intl.NumberFormat('en-IN').format(result[key]['maSP']['gia'])}đ</h5>
+                                            <h5 class="center-vertical">${new Intl.NumberFormat('en-IN').format(htmlEncode(result[key]['maSP']['gia']))}đ</h5>
                                         </div>
                                         <div class="col-md-2 d-flex justify-content-center mt-5">
                                             <a href="#" onclick="delProd('${result[key]['maSP']['maSp']}')"><i class="fa fa-trash text-danger"></i></a>
@@ -73,7 +73,7 @@
                     <div class="row m-1 p-1">
                         <hr>
                         <div class="col-md-2">
-                            <img src="/assets/img/@e.MaSP.Img" class="w-100" alt="123">
+                            <a asp-action="detail" asp-controller="products" asp-route-prodId="@e.MaSP.MaSp"><img src="/assets/img/@e.MaSP.Img" class="w-100" alt="123"></a>
                         </div>
                         <div class="col-md-8 d-flex justify-content-between">
                             <div>
@@ -94,7 +94,7 @@
     </div>
     <div class="col-md-5">
         <hr class="hr-success-20">
-        <h3>PAYMENT</h3>
+        <h3>Thanh toán</h3>
         <hr style="margin-top: 13px;">
         <div class="p-3">
             <div class="d-flex justify-content-between">
@@ -128,19 +128,20 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <h3>Thanh toán trực tiếp tại nhà</h3>
-                <form action="">
+                <form asp-action="buy" asp-controller="cart" method="post">
                     <div class="form-outline form-white mb-4">
-                        <input type="text" id="typeName" class="form-control form-control-lg" size="17" placeholder="Người nhận">
-                    </div>
-                    <div class="form-outline form-white mb-4">
-                        <input type="text" id="typeName1" class="form-control form-control-lg" size="17" placeholder="Email">
+                        <input required type="text" name="NguoiNhan" class="form-control form-control-lg" size="17" placeholder="Người nhận">
                     </div>
 
                     <div class="form-outline form-white mb-4">
-                        <input type="text" id="typeName2" class="form-control form-control-lg" size="17" placeholder="Số diện thoại">
+                        <input required type="text" name="Email" class="form-control form-control-lg" size="17" placeholder="Email">
+                    </div>
+
+                    <div class="form-outline form-white mb-4">
+                        <input required type="text" name="Phone" class="form-control form-control-lg" size="17" placeholder="Số diện thoại">
                     </div>
                     <div class="form-outline form-white mb-4">
-                        <input type="text" id="typeName3" class="form-control form-control-lg" size="17" placeholder="Địa chỉ">
+                        <input required type="text" name="Location" class="form-control form-control-lg" size="17" placeholder="Địa chỉ">
                     </div>
                     <button type="submit" class="btn btn-success btn-block btn-lg w-100">
                         <div class="d-flex justify-content-between">
@@ -152,7 +153,7 @@
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <h3>Thanh toán qua Visa</h3>
-                <form action="">
+                <div>
                     <div class="form-outline form-white mb-4">
                         <input type="text" id="typeName4" class="form-control form-control-lg" size="17" placeholder="Chủ thẻ">
                     </div>
@@ -183,7 +184,7 @@
                             <span>Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
                         </div>
                     </button>
-                </form>
+                </div>
             </div>
         </div>
 

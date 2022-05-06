@@ -16,19 +16,48 @@ namespace HaiSan.DI
         {
             _context = context;
         }
-
-        public List<Sanpham> GetAllProductByUsername(string id)
+        private async Task<List<GioHangModel>> GetGioHangByStatusAsync(string userid, short status)
         {
-            var prods = _context.Sanphams.Where(e => e.Username == id).ToList();
-            return prods;
+            var gioHang = _context.Giohangs.Where(e => e.Username == userid && e.Status == status).ToList();
+            List<GioHangModel> res = new List<GioHangModel>();
+            foreach (var e in gioHang)
+            {
+                var gioHangView = new GioHangModel()
+                {
+                    IdGioHang = e.IdGioHang,
+                    CardHolder = e.CardHolder,
+                    CardNumber = e.CardNumber,
+                    DateCreated = e.DateCreated,
+                    DateUpdated = e.DateUpdated,
+                    Location = e.Location,
+                    Phone = e.Phone,
+                    Status = e.Status,
+                    Watched = e.Watched,
+                };
+                var item = _context.Items.Where(x => x.IdGioHang == e.IdGioHang).ToList();
+                List<CartItem> listCartItem = new List<CartItem>();
+                foreach (var i in item)
+                {
+                    var sp = await _context.Sanphams.FindAsync(i.MaSp);
+                    var cartItem = new CartItem()
+                    {
+                        MaSP = sp,
+                        Sl = i.SoluongMua
+                    };
+                    listCartItem.Add(cartItem);
+                }
+                gioHangView.Products = listCartItem;
+                res.Add(gioHangView);
+            }
+            return res;
         }
+
 
         public async Task<User> GetUserByUserName(string username)
         {
             var user = await _context.Users.FindAsync(username);
             return user;
         }
-
         public User Login(LoginModel request)
         {
             var user = _context.Users.SingleOrDefault(e => e.Username == request.Username);
@@ -57,6 +86,11 @@ namespace HaiSan.DI
         public Task<List<Sanpham>> Search(string key, string id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<GioHangModel>> GetAllProductsByActionAsync(string userid, short action)
+        {
+            return await GetGioHangByStatusAsync(userid, action);
         }
     }
 }

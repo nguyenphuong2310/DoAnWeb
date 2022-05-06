@@ -21,12 +21,33 @@ namespace HaiSan.DI
         {
             _context = context;
         }
+        public async Task<int> ChangeStatus(string id, short status)
+        {
+            var gh = await _context.Giohangs.FindAsync(id);
+            if (gh == null) return 0;
+            if (status < 0 || status > 4) return 0;
+            gh.Status = status;
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> WatchedGioHang(string id)
+        {
+            var gh = await _context.Giohangs.FindAsync(id);
+            if (gh == null) return 0;
+            gh.Watched = true;
+            return await _context.SaveChangesAsync();
+        }
+
         public async Task<List<Loaisp>> AllCategory()
         {
             var cates = await _context.Loaisps.ToListAsync();
             return cates;
         }
-
+        public List<Sanpham> GetAllProductByUsername(string id)
+        {
+            var prods = _context.Sanphams.Where(e => e.Username == id).ToList();
+            return prods;
+        }
         private async Task<string> SaveProductImageAsync(IFormFile Img)
         {
             const int WIDTH = 600;
@@ -109,11 +130,10 @@ namespace HaiSan.DI
         {
             return await _context.Sanphams.FindAsync(productId);
         }
-
-        public async Task<List<Sanpham>> Search(string key)
+        public async Task<List<Sanpham>> Search(string key, int page)
         {
             var query = _context.Sanphams.Where(e => e.Ten.Contains(key));
-            return await PaginatedList<Sanpham>.CreateAsync(query.AsNoTracking(), 1, 15);
+            return await PaginatedList<Sanpham>.CreateAsync(query.AsNoTracking(), page, 15);
         }
 
         public async Task<int> Update(SanPhamUpdateRequest request)
@@ -140,6 +160,107 @@ namespace HaiSan.DI
         public async Task<Loaisp> GetCategoryById(string id)
         {
             return await _context.Loaisps.FindAsync(id);
+        }
+
+        public async Task<int> Buy(Giohang giohang, List<Item> items)
+        {
+            await _context.AddAsync(giohang);
+            var res = await _context.SaveChangesAsync();
+            if (res == 0) return 0;
+            foreach(var e in items)
+            {
+                await _context.AddAsync(e);
+            }
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> RemoveItem(ItemGioHang item)
+        {
+            var i = _context.Items.Where(e => e.IdGioHang == item.Id && e.MaSp == item.MaSp).FirstOrDefault();
+            if(i != null)
+            {
+                _context.Remove(i);
+                return await _context.SaveChangesAsync();
+            }
+            return 0;
+        }
+
+        public async Task<int> RemoveGioHang(string id)
+        {
+            var i = _context.Items.Where(e => e.IdGioHang == id).ToList();
+            _context.RemoveRange(i);
+            await _context.SaveChangesAsync();
+            var e = await _context.Giohangs.FindAsync(id);
+            _context.Giohangs.Remove(e);
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<Giohang> GetGioHang(string id)
+        {
+            return await _context.Giohangs.FindAsync(id);
+        }
+
+        public List<Giohang> GetGioHangWatched()
+        {
+           return _context.Giohangs.Where(e => e.Watched == false).ToList();
+        }
+        async Task<List<CartItem>> GetGioHangItemAsync(string idGioHang)
+        {
+            var items = _context.Items.Where(e => e.IdGioHang == idGioHang).ToList();
+            List<CartItem> listItems = new List<CartItem>();
+            foreach (var e in items)
+            {
+                var prod = await _context.Sanphams.FindAsync(e.MaSp);
+                CartItem item = new CartItem()
+                {
+                    MaSP = prod,
+                    Sl = e.SoluongMua
+                };
+                listItems.Add(item);
+            }
+            return listItems;
+        }
+        public async Task<GioHangModel> GetGioHangItem(string idGioHang)
+        {
+            var gh = await GetGioHang(idGioHang);
+            
+            GioHangModel res = new GioHangModel();
+            res.toGioHangModel(gh);
+            res.Products = await GetGioHangItemAsync(idGioHang);
+            return res;
+        }
+
+        public List<Giohang> GetAllGioHang()
+        {
+            return _context.Giohangs.OrderBy(e => e.Status).ToList();
+        }
+
+        public async Task<List<ThongKe>> GetMonthlyStatistics(int year)
+        {
+            var ghsQuery = from gh in _context.Giohangs
+                            join i in _context.Items on gh.IdGioHang equals i.IdGioHang
+                            join sp in _context.Sanphams on i.MaSp equals sp.MaSp
+                            where gh.DateCreated.Year == year
+                            select new
+                            {
+                                Id = gh.IdGioHang,
+                                Gia = sp.Gia,
+                                Thang = gh.DateCreated.Month,
+                                Sl = i.SoluongMua
+                            };
+            var res = from e in ghsQuery
+                      group e by new
+                      {
+                          Month = e.Thang
+                      } into q
+                      select new ThongKe()
+                      {
+                          Thang = q.Key.Month,
+                          Total = q.Sum(e => e.Sl * e.Gia)
+                      };
+            var month = await res.ToListAsync();
+            
+            return month;
         }
     }
 }

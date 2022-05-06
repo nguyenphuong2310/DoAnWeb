@@ -22,6 +22,7 @@ namespace HaiSan.Controllers
             _service = service;
         }
         [AllowAnonymous]
+        [Route("/user/login")]
         public IActionResult Login(string ReturnUrl)
         {
             ViewData["ReturnUrl"] = ReturnUrl;
@@ -30,6 +31,7 @@ namespace HaiSan.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [Route("/user/login")]
         public async Task<IActionResult> Login(LoginModel request, string ReturnUrl)
         {
             ViewData["ReturnUrl"] = ReturnUrl;
@@ -88,7 +90,7 @@ namespace HaiSan.Controllers
             }
             return View(request);
         }
-
+        [Route("/user/logout")]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(
@@ -97,6 +99,7 @@ namespace HaiSan.Controllers
         }
 
         [AllowAnonymous]
+        [Route("/user/register")]
         public IActionResult Register()
         {
             return View();
@@ -123,11 +126,23 @@ namespace HaiSan.Controllers
             return View();
         }
 
-        [Route("/user/manager")]
-        public IActionResult Manager()
+        [Route("/user/{transaction}")]
+        public async Task<IActionResult> Transaction(string transaction)
         {
             var userId = User.Identity.Name;
-            return View(_service.GetAllProductByUsername(userId));
+            var action = transaction.ToLower();
+            if (action == "pending")    return View(await _service.GetAllProductsByActionAsync(userId, 0));
+            if (action == "shiping")    return View(await _service.GetAllProductsByActionAsync(userId, 1));
+            return NotFound();
+        }
+        [Route("/user/completed")]
+        public async Task<IActionResult> Completed()
+        {
+            var userId = User.Identity.Name;
+            var list1 = await _service.GetAllProductsByActionAsync(userId, 2);
+            var list2 = await _service.GetAllProductsByActionAsync(userId, 3);
+            list1.AddRange(list2);
+            return View(list1);
         }
     }
 }

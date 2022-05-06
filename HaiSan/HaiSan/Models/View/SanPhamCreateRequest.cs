@@ -17,7 +17,7 @@ namespace HaiSan.Models.View
         [RegularExpression(@"\d+(\.\d{1,2})?", ErrorMessage = "Invalid price")]
         public decimal Gia { get; set; }
         [Display(Name = "Số lượng")]
-        public int? Soluong { get; set; }
+        public int Soluong { get; set; }
         [Display(Name = "Tiêu đề")]
         public string Title { get; set; }
         [Display(Name = "Mô tả")]

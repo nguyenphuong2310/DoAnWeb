@@ -17,9 +17,15 @@ namespace HaiSan.Controllers
     public class AdminController : Controller
     {
         private readonly IProductService _service;
+
         public AdminController(IProductService service)
         {
             _service = service;
+        }
+        public async Task<IActionResult> ChartAsync()
+        {
+            
+            return View(await _service.GetMonthlyStatistics(2022));
         }
         public async Task<IActionResult> ModifyAsync()
         {
@@ -28,6 +34,16 @@ namespace HaiSan.Controllers
             ViewData["Info"] = model;
             return View();
         }
+        public IActionResult Manager()
+        {
+            var userId = User.Identity.Name;
+            return View(_service.GetAllProductByUsername(userId));
+        }
+        public IActionResult Carts()
+        {
+            return View(_service.GetAllGioHang());
+        }
+        
         [HttpPost]
         public async Task<IActionResult> ChangeBanner(ModifyModel request)
         {
@@ -88,11 +104,12 @@ namespace HaiSan.Controllers
             }
             return View();
         }
-
-        /*[HttpPost]
-        public IActionResult ChangeFeatureProducts(ProductsModifyRequest request)
+        [Route("/admin/cartdetail/{id}")]
+        public async Task<IActionResult> CartDetail(string id)
         {
-            return View();
-        }*/
+            if (String.IsNullOrEmpty(id)) return NotFound();
+            await _service.WatchedGioHang(id);
+            return View(await _service.GetGioHangItem(id));
+        }
     }
 }

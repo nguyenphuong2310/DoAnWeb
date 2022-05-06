@@ -16,7 +16,7 @@ namespace HaiSan.Models.Pure
         public string MaSp { get; set; }
         public string Ten { get; set; }
         public decimal Gia { get; set; }
-        public int? Soluong { get; set; }
+        public int Soluong { get; set; }
         public string Title { get; set; }
         public string MoTa { get; set; }
         public string Img { get; set; }
