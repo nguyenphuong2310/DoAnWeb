@@ -117,13 +117,11 @@ namespace HaiSan.Models.Pure
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Status)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.Username)
                     .HasMaxLength(100)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Watched).HasColumnName("watched");
 
                 entity.HasOne(d => d.UsernameNavigation)
                     .WithMany(p => p.Giohangs)

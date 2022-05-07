@@ -17,7 +17,12 @@ namespace HaiSan.Controllers
             _logger = logger;
             _service = service;
         }
-
+        [Route("/products/search")]
+        public async Task<IActionResult> Search(string key, int page = 1)
+        {
+            ViewData["Key"] = key;
+            return View(await _service.Search(key, page));
+        }
         [Route("/products/{category}")]
         public async Task<IActionResult> Index(string category, int page = 1, int limit = 15)
         {
@@ -25,6 +30,13 @@ namespace HaiSan.Controllers
             ViewData["Category"] = category;
             var res = await _service.GetAllByCategoryIdPaging(category, page, limit);
             return View(res);
+        }
+        [Route("/products/changestatus")]
+        public async Task<bool> ChangeStatusAsync([FromBody]ChangeStatus request)
+        {
+            short status;
+            if (short.TryParse(request.Status, out status) == false) return false;
+            return await _service.ChangeStatus(request.Id, status) != 0;
         }
         [Route("/products/detail")]
         public async Task<IActionResult> Detail(string prodId)

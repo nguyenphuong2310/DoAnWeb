@@ -13,8 +13,7 @@ namespace HaiSan.Models.Pure
         }
 
         public string IdGioHang { get; set; }
-        public string Status { get; set; }
-        public DateTime? DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }
         public string Location { get; set; }
         public string Phone { get; set; }
@@ -23,6 +22,8 @@ namespace HaiSan.Models.Pure
         public string CardHolder { get; set; }
         public string Expired { get; set; }
         public string Cvv { get; set; }
+        public bool? Watched { get; set; }
+        public short? Status { get; set; }
 
         public virtual User UsernameNavigation { get; set; }
         public virtual ICollection<Item> Items { get; set; }

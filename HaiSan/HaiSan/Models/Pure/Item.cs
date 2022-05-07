@@ -9,7 +9,7 @@ namespace HaiSan.Models.Pure
     {
         public string MaSp { get; set; }
         public string IdGioHang { get; set; }
-        public int? SoluongMua { get; set; }
+        public int SoluongMua { get; set; }
         public decimal? GiamGia { get; set; }
         public DateTime? DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }

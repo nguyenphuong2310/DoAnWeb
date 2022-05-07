@@ -18,7 +18,7 @@ namespace HaiSan.Models.View
         public decimal Gia { get; set; }
         [Display(Name = "Số lượng")]
         [Required]
-        public int? Soluong { get; set; }
+        public int Soluong { get; set; }
         [Display(Name = "Tiêu đề")]
         [Required]
         public string Title { get; set; }

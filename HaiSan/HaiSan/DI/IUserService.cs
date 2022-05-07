@@ -12,7 +12,7 @@ namespace HaiSan.DI
         Task<User> GetUserByUserName(string username);
         User Login(LoginModel request);
         Task<int> Register(RegisterModel user);
-        List<Sanpham> GetAllProductByUsername(string id);
+        Task<List<GioHangModel>> GetAllProductsByActionAsync(string userid, short action);
         Task<List<Sanpham>> Search(string key, string id);
     }
 }

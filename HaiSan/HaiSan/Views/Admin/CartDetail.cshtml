@@ -1,0 +1,128 @@
+﻿@{ Layout = "_AdminManager"; decimal total = 0;}
+@model HaiSan.Models.View.GioHangModel
+@section Link {
+    <!-- Custom fonts for this template -->
+    <link href="/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/admin/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+}
+@section scripts {
+    <script src="/admin/js/demo/datatables-demo.js"></script>
+    <script>
+        var changes = $('#status_gioHang');
+        function changeStatus(id) {
+            var data = { Id: id, Status: changes.find(":selected").val() };
+            $.ajax({
+                url: '/products/changestatus',
+                type: "post",
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                dataType: 'json',
+                success: function (result) {
+
+                }
+            });
+        }
+    </script>
+}
+
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Chi tiết đơn hàng</h1>
+    <hr class="sidebar-divider">
+    <div class="accordion" id="accordionExample">
+
+        <div class="card">
+            <div class="card-header" id="@("heading" + Model.IdGioHang)">
+                <h5 class="mb-0">
+                    <div class="list-group-item list-group-item-action" style="border-radius: 5px;">
+                        <div class="row">
+                            <div class="col-md-10 btn btn-block text-left collapsed" data-toggle="collapse" data-target="#@("collapse" + Model.IdGioHang)" aria-expanded="true" aria-controls="@("collapse" + Model.IdGioHang)">
+                                <div>
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Mã giao dịch: @Model.IdGioHang</h5>
+                                        <small>@(Math.Floor((DateTime.Now - Model.DateCreated).TotalDays) + " ngày trước")</small>
+                                    </div>
+                                    <p class="mb-1">Địa chỉ nhận: @Model.Location</p>
+                                    <p class="mb-1">SĐT: @Model.Phone</p>
+                                </div>
+                            </div>
+                            <select id="status_gioHang" onchange="changeStatus('@Model.IdGioHang')" name="status" class="col-md-2">
+                                @{ string[] status = { "Đang xử lý", "Đang giao", "Hoàn thành", "Bị hủy", "Hoàn đơn" };}
+                                @for (short i = 0; i < status.Length; i++)
+                                {
+                                    if (Model.Status == i)
+                                    {
+                                        <option selected value="@i">@status[i]</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i">@status[i]</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                </h5>
+            </div>
+            <div id="@("collapse" + Model.IdGioHang)" class="collapse" aria-labelledby="@("heading" + Model.IdGioHang)" data-parent="#accordionExample">
+                <div class="card-body" style="height: 50vh; overflow-y: scroll;">
+                    @foreach (var p in Model.Products)
+                    {
+                        total += (p.Sl * p.MaSP.Gia);
+                        <hr>
+                        <div class="row m-1 p-1">
+                            <div class="col-md-1">
+                                <a href="#"><img src="/assets/img/@p.MaSP.Img" class="w-100" alt="123"></a>
+                            </div>
+                            <div class="col-md-10 d-flex justify-content-between">
+                                <div>
+                                    <h5 class="m-0">@p.MaSP.Title</h5>
+                                    <p class="m-0">@p.MaSP.Ten</p>
+                                    <p class="m-0">Số lượng mua x @p.Sl</p>
+                                </div>
+                                <h5 class="center-vertical">@p.MaSP.Gia.ToString("0,0")đ</h5>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <hr />
+    <h1>Tổng giá trị đơn hàng: @(total.ToString("0,0"))đ</h1>
+
+</div>
+
+<!-- /.container-fluid -->
+<!-- Modal -->
+<div class="modal fade" id="tbModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <div id="tbContent">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

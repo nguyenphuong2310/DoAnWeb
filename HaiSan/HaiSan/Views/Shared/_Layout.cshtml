@@ -114,31 +114,33 @@
                 </div>
                 <div class="navbar align-self-center d-flex">
                     <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
-                            <div class="input-group-text">
-                                <i class="fa fa-fw fa-search"></i>
+                        <form method="get" asp-action="search" asp-controller="products">
+                            <div class="input-group">
+                                <input name="key" type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                                <button type="submit" class="input-group-text">
+                                    <i class="fa fa-fw fa-search"></i>
+                                </button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                     <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
                     </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                    <a class="nav-icon position-relative text-decoration-none" asp-action="index" asp-controller="cart">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
                         @if (jsoncart != null)
                         {
                             var cart = JsonConvert.DeserializeObject<List<HaiSan.Models.View.CartItem>>(jsoncart);
-                            <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">@cart.Count</span>
+                            <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-danger">@cart.Count</span>
                         }
                     </a>
                     @if (isAuth)
                     {
-                        <a class="nav-icon position-relative text-decoration-none" asp-action="manager" asp-controller="user">
-                            <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                            <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
-                        </a>
-
+                <a class="nav-icon position-relative text-decoration-none" asp-action="pending" asp-controller="user">
+                    <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                    @if (User.IsInRole("admin"))
+                    {<span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">@await Component.InvokeAsync("Notify")</span>}
+                </a>
                     }
                     else
                     {
@@ -158,9 +160,9 @@
             <div class="w-100 pt-1 mb-5 text-right">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" method="get" class="modal-content modal-body border-0 p-0">
+            <form asp-action="search" asp-controller="products" method="get" class="modal-content modal-body border-0 p-0">
                 <div class="input-group mb-2">
-                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
+                    <input type="text" class="form-control" id="inputModalSearch" name="key" placeholder="Search ...">
                     <button type="submit" class="input-group-text bg-success text-light">
                         <i class="fa fa-fw fa-search text-white"></i>
                     </button>
@@ -265,6 +267,16 @@
     <!-- Start Slider Script -->
     <script src="/assets/js/slick.min.js"></script>
     <script type="text/javascript">
+        function htmlEncode(str) {
+            return String(str).replace(/[^\w. ]/gi, function (c) {
+                return '&#' + c.charCodeAt(0) + ';';
+            });
+        }
+        function jsEscape(str) {
+            return String(str).replace(/[^\w. ]/gi, function (c) {
+                return '\\u' + ('0000' + c.charCodeAt(0).toString(16)).slice(-4);
+            });
+        }
         function addCart(prod, sl) {
             var data = { MaSP: prod, Sl: sl };
             $.ajax({

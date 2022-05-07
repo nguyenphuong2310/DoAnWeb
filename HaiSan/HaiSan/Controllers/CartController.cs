@@ -1,5 +1,7 @@
 ﻿using HaiSan.DI;
+using HaiSan.Models.Pure;
 using HaiSan.Models.View;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -85,5 +87,58 @@ namespace HaiSan.Controllers
             }
             return cart.Count == 0 ? null : cart;
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> BuyAsync(BuyModel request)
+        {
+            Giohang gh = new Giohang()
+            {
+                IdGioHang = Guid.NewGuid().ToString(),
+                DateCreated = DateTime.Now,
+                Location = request.Location,
+                Phone = request.Phone,
+                Status = 0,
+                Username = User.Identity.Name,
+                Watched = false,
+            };
+            List<Item> items = new List<Item>();
+            foreach (var e in GetCartItems())
+            {
+                Item i = new Item()
+                {
+                    DateCreated = DateTime.Now,
+                    GiamGia = 0,
+                    IdGioHang = gh.IdGioHang,
+                    MaSp = e.MaSP.MaSp,
+                    SoluongMua = e.Sl
+                };
+                items.Add(i);
+            }
+            var res = await _service.Buy(gh, items);
+            if(res != 0)
+                return RedirectToAction("pending", "user");
+            return View();
+        }
+        [Route("/cart/removeItem")]
+        [HttpPost]
+        public async Task<bool> RemoveItemAsync([FromBody]ItemGioHang request)
+        {
+            var gh = await _service.GetGioHang(request.Id);
+            if (gh.Status > 1) return false;
+            var res = await _service.RemoveItem(request);
+            return res != 0;
+        }
+
+        [Route("/cart/removeGioHang")]
+        [HttpPost]
+        public async Task<bool> RemoveGioHang([FromBody] IdRequest request)
+        {
+            var gh = await _service.GetGioHang(request.Id);
+            if (gh.Status > 1) return false;
+            return await _service.RemoveGioHang(request.Id) != 0;
+        }
+
+
     }
 }

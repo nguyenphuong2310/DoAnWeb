@@ -1,0 +1,19 @@
+﻿@model List<HaiSan.Models.Pure.Giohang>
+<div style="height: 50vh; overflow-y: scroll">
+    @foreach (var e in Model)
+    {
+
+        <a class="dropdown-item d-flex align-items-center" asp-controller="admin" asp-action="cartdetail" asp-route-id="@e.IdGioHang">
+            <div class="mr-3">
+                <div class="icon-circle bg-success">
+                    <i class="fas fa-donate text-white"></i>
+                </div>
+            </div>
+            <div>
+                <div class="small text-gray-500">@e.DateCreated.ToLocalTime()</div>
+                Có đơn đặt hàng mới: @e.IdGioHang
+            </div>
+        </a>
+
+    }
+</div>

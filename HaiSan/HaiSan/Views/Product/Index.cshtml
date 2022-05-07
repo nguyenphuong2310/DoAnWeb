@@ -10,7 +10,7 @@
     <div class="row">
 
         <div class="col-lg-3">
-            <h1 class="h2 pb-4">Categories</h1>
+            <h1 class="h2 pb-4">Loại sản phẩm</h1>
             <div class="list-group mb-2">
                 @if (cate.ToLower() == "all")
                 {
@@ -101,7 +101,7 @@
             <div div="row">
                 <p>Have @Model.TotalPages page here!</p>
                 <ul class="pagination pagination-lg justify-content-end">
-                    @if (Model.PageIndex > 1)
+                    @if (Model.HasPreviousPage)
                     {
                         var pre = Model.PageIndex - 1;
                         <li class="page-item">
@@ -113,10 +113,12 @@
                         <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#" tabindex="-1">@Model.PageIndex</a>
                     </li>
 
-                    @if (Model.PageIndex < Model.TotalPages)
+                    @if (Model.HasNextPage)
                     {
+                        var next = Model.PageIndex + 1;
+                        
                         <li class="page-item">
-                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="/products/@cate?page=@Model.PageIndex&limit=@Model.PageSize+1"><i class="fas fa-chevron-right"></i></a>
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="/products/@cate?page=@next&limit=@Model.PageSize"><i class="fas fa-chevron-right"></i></a>
                         </li>
                     }
                 </ul>
