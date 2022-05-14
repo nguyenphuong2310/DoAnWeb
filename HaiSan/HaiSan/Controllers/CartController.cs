@@ -87,11 +87,15 @@ namespace HaiSan.Controllers
             }
             return cart.Count == 0 ? null : cart;
         }
-
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> BuyAsync(BuyModel request)
+        public async Task<IActionResult> Index(BuyModel request)
         {
+            if (GetCartItems().Count == 0)
+            {
+                ModelState.AddModelError("", "Giỏ hàng trống!");
+                return View(GetCartItems());
+            }
             Giohang gh = new Giohang()
             {
                 IdGioHang = Guid.NewGuid().ToString(),
@@ -118,7 +122,8 @@ namespace HaiSan.Controllers
             var res = await _service.Buy(gh, items);
             if(res != 0)
                 return RedirectToAction("pending", "user");
-            return View();
+            ModelState.AddModelError("", "Lỗi xảy ra!");
+            return View(GetCartItems());
         }
         [Route("/cart/removeItem")]
         [HttpPost]

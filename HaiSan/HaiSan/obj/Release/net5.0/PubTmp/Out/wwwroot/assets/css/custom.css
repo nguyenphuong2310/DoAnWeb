@@ -1,0 +1,61 @@
+.change_prod:checked~* {
+    background-color: #59ab6e;
+}
+
+.max-h-800 {
+    max-height: 800px;
+}
+
+.overflow-y-scroll {
+    overflow-y: scroll;
+}
+
+.border-circle {
+    border-radius: 50%;
+}
+
+.h-75vh {
+    height: 75vh;
+}
+
+.cus-bor {
+    border: dashed 5px #59ab6e;
+}
+
+.cus-btn {
+    border-radius: 0 0 10px 10px;
+    padding: 15px 40px;
+    background-color: #59ab6e;
+    border: none;
+    font-size: 27px;
+    color: white;
+}
+
+.block-center {
+    width: 90%;
+    margin: 30px auto;
+}
+
+.border-radius-8 {
+    border-radius: 8px;
+}
+
+.hr-success-20 {
+    height: 15px !important;
+    color: #59ab6e;
+    border-radius: 3px;
+    opacity: 1;
+    margin: 5px 0;
+}
+
+.center-vertical {
+    position: relative;
+    top: 50%;
+}
+
+@media (max-width: 720px) {
+    .block-center {
+        width: 98%;
+        margin: 30px auto;
+    }
+}
